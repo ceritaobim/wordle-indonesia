@@ -9,7 +9,16 @@ const TOPIC_LABELS = {
     hewan: "🐅 Hewan & Flora",
     budaya: "🎭 Budaya",
     sains: "🔬 Sains & Tekno",
-    sastra: "📜 Sastra & Kiasan"
+    sastra: "📜 Sastra & Kiasan",
+    musik: "🎵 Musik",
+    artis: "⭐ Artis & Selebriti",
+    film: "🎬 Film"
+};
+
+const REGION_LABELS = {
+    indonesia: "🇮🇩 Indonesia",
+    global: "🌍 Global",
+    campur: "🔀 Campur"
 };
 
 const DIFF_LABELS = {
@@ -220,6 +229,198 @@ const HANGMAN_BANK = [
     { word: "BUMI MANUSIA", topic: "sastra", diff: "sulit", clue: "Mahakarya sastra roman sejarah karya sastrawan besar Pramoedya Ananta Toer." }
 ];
 
+// =========================================================================
+// 3. BANK SOAL HIBURAN: MUSIK, ARTIS & FILM (region: "id" = Indonesia, "global")
+//    Seluruh petunjuk disusun dari fakta yang telah diverifikasi lewat riset.
+// =========================================================================
+const HIBURAN_WORDLE = [
+    // ---------------- MUSIK • INDONESIA ----------------
+    { word: "SLANK", topic: "musik", region: "id", diff: "mudah", clue: "Band rock asal Jakarta yang dibentuk Bimbim pada 1983; markasnya di Gang Potlot dan penggemarnya disebut Slankers." },
+    { word: "TULUS", topic: "musik", region: "id", diff: "mudah", clue: "Penyanyi solo bernama lengkap Muhammad Tulus, dikenal lewat lagu 'Pamit' dan 'Hati-Hati di Jalan'." },
+    { word: "RAISA", topic: "musik", region: "id", diff: "mudah", clue: "Penyanyi bernama lengkap Raisa Andriana, dikenal lewat lagu 'Serba Salah', 'Jatuh Hati', dan 'Kali Kedua'." },
+    { word: "AFGAN", topic: "musik", region: "id", diff: "mudah", clue: "Penyanyi bernama lengkap Afgansyah Reza, dikenal lewat lagu 'Terima Kasih Cinta' dan 'Sadis'." },
+    { word: "LIRIK", topic: "musik", region: "id", diff: "mudah", clue: "Susunan kata pada sebuah lagu yang dinyanyikan; syair lagu." },
+    { word: "ARIEL", topic: "musik", region: "id", diff: "sedang", clue: "Vokalis grup NOAH (dahulu bernama Peterpan) yang bernama asli Nazril Irham." },
+    { word: "AGNEZ", topic: "musik", region: "id", diff: "sedang", clue: "Penyanyi asal Jakarta yang berkarier internasional; lagunya 'Coke Bottle' menampilkan Timbaland dan T.I." },
+    { word: "SARON", topic: "musik", region: "id", diff: "sedang", clue: "Alat musik gamelan berbilah logam yang dipukul dengan pemukul kayu, memainkan melodi pokok (balungan)." },
+    { word: "IRAMA", topic: "musik", region: "id", diff: "sedang", clue: "Gerakan teratur berturut-turut dalam musik, ditandai pola ketukan dan tempo lagu." },
+    { word: "KOPLO", topic: "musik", region: "id", diff: "sulit", clue: "Genre turunan dangdut bertempo cepat dengan tabuhan kendang yang menonjol, berkembang pesat dari Jawa Timur." },
+    { word: "ORKES", topic: "musik", region: "id", diff: "sulit", clue: "Sebutan kelompok pemusik dengan banyak pemain; 'Orkes Melayu' menjadi cikal bakal musik dangdut." },
+
+    // ---------------- MUSIK • GLOBAL ----------------
+    { word: "DISCO", topic: "musik", region: "global", diff: "mudah", clue: "Genre musik dansa populer tahun 1970-an yang identik dengan bola cermin berputar di lantai dansa." },
+    { word: "PIANO", topic: "musik", region: "global", diff: "mudah", clue: "Alat musik berdawai-pukul dengan 88 tuts hitam putih." },
+    { word: "ADELE", topic: "musik", region: "global", diff: "mudah", clue: "Penyanyi Inggris peraih banyak Grammy, terkenal lewat album '21' serta lagu 'Hello' dan 'Someone Like You'." },
+    { word: "REMIX", topic: "musik", region: "global", diff: "mudah", clue: "Versi lagu yang diolah ulang oleh DJ atau produser dengan mengubah atau menambah unsur musiknya." },
+    { word: "JIMIN", topic: "musik", region: "global", diff: "mudah", clue: "Anggota boy group BTS dari Korea Selatan; lagu solonya 'Like Crazy' dirilis pada 2023." },
+    { word: "JISOO", topic: "musik", region: "global", diff: "mudah", clue: "Anggota grup perempuan K-pop BLACKPINK yang juga bermain di drama 'Snowdrop'." },
+    { word: "DRAKE", topic: "musik", region: "global", diff: "sedang", clue: "Rapper dan penyanyi asal Kanada yang terkenal lewat lagu 'Hotline Bling'." },
+    { word: "ELVIS", topic: "musik", region: "global", diff: "sedang", clue: "Penyanyi Amerika berjuluk 'Raja Rock and Roll'; rumahnya, Graceland, berada di Memphis." },
+    { word: "QUEEN", topic: "musik", region: "global", diff: "sedang", clue: "Band rock Inggris dengan vokalis Freddie Mercury, pencipta lagu 'Bohemian Rhapsody'." },
+    { word: "BRUNO", topic: "musik", region: "global", diff: "sedang", clue: "Penyanyi Amerika bernama asli Peter Gene Hernandez; hit 'Just the Way You Are' dan 'Uptown Funk'." },
+    { word: "BLUES", topic: "musik", region: "global", diff: "sedang", clue: "Genre musik yang lahir dari komunitas Afrika-Amerika di Amerika Serikat bagian selatan pada akhir abad ke-19." },
+    { word: "SAMBA", topic: "musik", region: "global", diff: "sedang", clue: "Musik dan tarian riang khas Brasil yang identik dengan karnaval di Rio de Janeiro." },
+    { word: "CELLO", topic: "musik", region: "global", diff: "sedang", clue: "Alat musik gesek berdawai empat bernada rendah, dimainkan sambil duduk dengan ujungnya menyentuh lantai." },
+    { word: "FLUTE", topic: "musik", region: "global", diff: "sedang", clue: "Alat musik tiup dari logam yang dimainkan dengan meniup melintang pada lubang di sisinya." },
+    { word: "OASIS", topic: "musik", region: "global", diff: "sulit", clue: "Band rock Inggris dari Manchester yang dibentuk kakak-adik Gallagher; lagunya 'Wonderwall' sangat terkenal." },
+    { word: "USHER", topic: "musik", region: "global", diff: "sulit", clue: "Penyanyi R&B Amerika yang merilis hit 'Yeah!' pada 2004 bersama Lil Jon dan Ludacris." },
+    { word: "LORDE", topic: "musik", region: "global", diff: "sulit", clue: "Penyanyi Selandia Baru yang melejit lewat lagu 'Royals' pada 2013." },
+    { word: "TANGO", topic: "musik", region: "global", diff: "sulit", clue: "Musik dan tarian berpasangan yang lahir di kawasan Rio de la Plata, Argentina dan Uruguay." },
+    { word: "OPERA", topic: "musik", region: "global", diff: "sulit", clue: "Drama panggung yang dialognya umumnya dinyanyikan dengan iringan orkestra." },
+    { word: "TENOR", topic: "musik", region: "global", diff: "sulit", clue: "Jenis suara pria dewasa yang tinggi dalam paduan suara dan opera." },
+    { word: "VIOLA", topic: "musik", region: "global", diff: "sulit", clue: "Alat musik gesek yang sedikit lebih besar dari biola dan bernada lebih rendah." },
+
+    // ---------------- ARTIS • INDONESIA ----------------
+    { word: "TUKUL", topic: "artis", region: "id", diff: "mudah", clue: "Komedian dan presenter yang terkenal dengan jargon 'Kembali ke laptop' di acara 'Bukan Empat Mata'." },
+    { word: "RAFFI", topic: "artis", region: "id", diff: "mudah", clue: "Presenter dan aktor yang mendirikan RANS Entertainment bersama istrinya, Nagita Slavina." },
+    { word: "INDRO", topic: "artis", region: "id", diff: "sedang", clue: "Salah satu personel trio komedi Warkop DKI bersama Dono dan Kasino." },
+    { word: "DEDDY", topic: "artis", region: "id", diff: "sedang", clue: "Mantan pesulap (mentalist) yang kini dikenal sebagai presenter dan pemilik podcast 'Close the Door'." },
+    { word: "YESSY", topic: "artis", region: "id", diff: "sulit", clue: "Aktris dan presenter yang memerankan Ratna di film 'Gita Cinta dari SMA' (1979), berpasangan dengan Rano Karno." },
+    { word: "MAUDY", topic: "artis", region: "id", diff: "sulit", clue: "Aktris sekaligus penyanyi yang menempuh pendidikan di Universitas Oxford dan Stanford." },
+
+    // ---------------- ARTIS • GLOBAL ----------------
+    { word: "KEANU", topic: "artis", region: "global", diff: "mudah", clue: "Aktor Hollywood kelahiran Beirut yang memerankan Neo di 'The Matrix' dan tokoh utama 'John Wick'." },
+    { word: "HANKS", topic: "artis", region: "global", diff: "mudah", clue: "Nama belakang aktor Tom, pemeran utama 'Forrest Gump' dan 'Cast Away'; pemenang Oscar dua kali berturut-turut." },
+    { word: "BRUCE", topic: "artis", region: "global", diff: "sedang", clue: "Nama depan legenda seni bela diri Jeet Kune Do, bintang film 'Enter the Dragon' (1973)." },
+    { word: "SMITH", topic: "artis", region: "global", diff: "sedang", clue: "Nama belakang aktor dan rapper Will, bintang serial 'The Fresh Prince of Bel-Air' dan film 'Men in Black'." },
+    { word: "JOLIE", topic: "artis", region: "global", diff: "sedang", clue: "Nama belakang aktris Angelina, pemeran Lara Croft: Tomb Raider (2001) dan peraih Oscar lewat 'Girl, Interrupted'." },
+    { word: "ROBIN", topic: "artis", region: "global", diff: "sulit", clue: "Nama depan komedian dan aktor peraih Oscar yang menjadi suara Genie di 'Aladdin' dan bermain di 'Mrs. Doubtfire'." },
+    { word: "STONE", topic: "artis", region: "global", diff: "sulit", clue: "Nama belakang aktris Emma, pemeran utama 'La La Land' yang meraih Oscar Aktris Terbaik 2017." },
+
+    // ---------------- FILM • INDONESIA ----------------
+    { word: "DILAN", topic: "film", region: "id", diff: "mudah", clue: "Tokoh film remaja berlatar Bandung 1990, diperankan Iqbaal Ramadhan dan diadaptasi dari novel Pidi Baiq." },
+    { word: "HOROR", topic: "film", region: "id", diff: "mudah", clue: "Genre film yang bertujuan menakut-nakuti; sangat kuat di perfilman Indonesia lewat kisah hantu dan klenik." },
+    { word: "CINTA", topic: "film", region: "id", diff: "mudah", clue: "Nama tokoh utama perempuan yang diperankan Dian Sastrowardoyo dalam film 'Ada Apa dengan Cinta?' (2002)." },
+    { word: "DANUR", topic: "film", region: "id", diff: "sedang", clue: "Film horor (2017) arahan Awi Suryadi berdasarkan kisah Risa Saraswati yang berteman dengan hantu anak-anak Belanda." },
+    { word: "SETAN", topic: "film", region: "id", diff: "sedang", clue: "Kata kedua dalam judul film horor (2017) karya Joko Anwar yang merupakan buatan ulang film tahun 1980." },
+    { word: "BADAI", topic: "film", region: "id", diff: "sulit", clue: "Kata pertama dalam judul film (1977) karya Teguh Karya yang soundtrack-nya digarap antara lain oleh Chrisye dan Eros Djarot." },
+
+    // ---------------- FILM • GLOBAL ----------------
+    { word: "SHREK", topic: "film", region: "global", diff: "mudah", clue: "Film animasi DreamWorks (2001) tentang raksasa hijau di rawa yang menyelamatkan Putri Fiona; pemenang Oscar animasi pertama." },
+    { word: "MOANA", topic: "film", region: "global", diff: "mudah", clue: "Film animasi Disney (2016) tentang putri Polinesia yang berlayar bersama Maui untuk mengembalikan hati Te Fiti." },
+    { word: "JOKER", topic: "film", region: "global", diff: "mudah", clue: "Film (2019) tentang Arthur Fleck yang diperankan Joaquin Phoenix, yang meraih Oscar Aktor Terbaik lewat peran ini." },
+    { word: "ALIEN", topic: "film", region: "global", diff: "sedang", clue: "Film fiksi ilmiah-horor (1979) arahan Ridley Scott di pesawat Nostromo, dibintangi Sigourney Weaver." },
+    { word: "ROCKY", topic: "film", region: "global", diff: "sedang", clue: "Film tinju (1976) yang ditulis dan dibintangi Sylvester Stallone, pemenang Oscar Film Terbaik." },
+    { word: "DUMBO", topic: "film", region: "global", diff: "sedang", clue: "Film animasi Disney (1941) tentang anak gajah bertelinga besar yang bisa terbang." },
+    { word: "TENET", topic: "film", region: "global", diff: "sulit", clue: "Film thriller fiksi ilmiah (2020) karya Christopher Nolan tentang inversi atau pembalikan arus waktu." },
+    { word: "BAMBI", topic: "film", region: "global", diff: "sulit", clue: "Film animasi Disney (1942) tentang anak rusa muda di hutan yang bersahabat dengan Thumper dan Flower." },
+    { word: "LOGAN", topic: "film", region: "global", diff: "sulit", clue: "Film superhero (2017) yang menjadi penutup kisah Hugh Jackman sebagai Wolverine." }
+]
+.map(item => ({ ...item, word: item.word.trim().toUpperCase() }))
+.filter(item => item.word.length === 5 && /^[A-Z]{5}$/.test(item.word));
+
+const HIBURAN_HANGMAN = [
+    // ---------------- MUSIK • INDONESIA ----------------
+    { word: "BENGAWAN SOLO", topic: "musik", region: "id", diff: "mudah", clue: "Lagu keroncong ciptaan Gesang Martohartono (1940) tentang sungai terpanjang di Pulau Jawa." },
+    { word: "INDONESIA RAYA", topic: "musik", region: "id", diff: "mudah", clue: "Lagu kebangsaan Republik Indonesia ciptaan W.R. Supratman yang pertama kali dikumandangkan pada Kongres Pemuda II tahun 1928." },
+    { word: "RHOMA IRAMA", topic: "musik", region: "id", diff: "mudah", clue: "Penyanyi dan musisi yang dijuluki Raja Dangdut, pemimpin grup Soneta." },
+    { word: "INUL DARATISTA", topic: "musik", region: "id", diff: "mudah", clue: "Penyanyi dangdut asal Pasuruan, Jawa Timur, yang terkenal dengan aksi panggung 'goyang ngebor'." },
+    { word: "LAGU DAERAH", topic: "musik", region: "id", diff: "mudah", clue: "Lagu tradisional dari suatu daerah, misalnya 'Ampar-Ampar Pisang' dari Kalimantan Selatan dan 'Lir-Ilir' dari Jawa." },
+    { word: "RAYUAN PULAU KELAPA", topic: "musik", region: "id", diff: "sedang", clue: "Lagu ciptaan Ismail Marzuki yang memuji keindahan tanah air dan sering dibawakan paduan suara." },
+    { word: "HALO HALO BANDUNG", topic: "musik", region: "id", diff: "sedang", clue: "Lagu perjuangan ciptaan Ismail Marzuki yang terinspirasi peristiwa Bandung Lautan Api." },
+    { word: "ISMAIL MARZUKI", topic: "musik", region: "id", diff: "sedang", clue: "Komponis besar asal Betawi, pencipta Halo-Halo Bandung dan Rayuan Pulau Kelapa; namanya diabadikan pada pusat kesenian di Cikini, Jakarta." },
+    { word: "KOES PLUS", topic: "musik", region: "id", diff: "sedang", clue: "Band legendaris yang sebelumnya bernama Koes Bersaudara; lagu 'Kolam Susu' berlirik 'tongkat kayu dan batu jadi tanaman'." },
+    { word: "ELVY SUKAESIH", topic: "musik", region: "id", diff: "sedang", clue: "Penyanyi dangdut legendaris berjuluk Ratu Dangdut yang sering berduet dengan Rhoma Irama." },
+    { word: "DANGDUT KOPLO", topic: "musik", region: "id", diff: "sedang", clue: "Genre turunan dangdut bertempo cepat dengan tabuhan kendang yang menonjol, berkembang pesat dari Jawa Timur." },
+    { word: "CHRISYE", topic: "musik", region: "id", diff: "sedang", clue: "Penyanyi legendaris bernama lahir Christian Rahadi, dikenal lewat lagu 'Lilin-Lilin Kecil' dan 'Badai Pasti Berlalu'." },
+    { word: "SLANKERS", topic: "musik", region: "id", diff: "sedang", clue: "Sebutan resmi bagi penggemar setia band Slank." },
+    { word: "GANG POTLOT", topic: "musik", region: "id", diff: "sulit", clue: "Kawasan di Duren Tiga, Jakarta Selatan, yang menjadi markas legendaris sebuah band rock Indonesia (Slank)." },
+    { word: "KERONCONG TUGU", topic: "musik", region: "id", diff: "sulit", clue: "Aliran keroncong tertua di Jakarta yang berakar dari komunitas keturunan Portugis di Kampung Tugu, Jakarta Utara." },
+    { word: "WAGE RUDOLF SUPRATMAN", topic: "musik", region: "id", diff: "sulit", clue: "Nama lengkap pencipta lagu kebangsaan Indonesia Raya." },
+
+    // ---------------- MUSIK • GLOBAL ----------------
+    { word: "THE BEATLES", topic: "musik", region: "global", diff: "mudah", clue: "Band legendaris asal Liverpool, Inggris, beranggotakan John Lennon, Paul McCartney, George Harrison, dan Ringo Starr." },
+    { word: "MICHAEL JACKSON", topic: "musik", region: "global", diff: "mudah", clue: "Dijuluki Raja Pop, terkenal dengan gerakan moonwalk dan album 'Thriller' (1982)." },
+    { word: "TAYLOR SWIFT", topic: "musik", region: "global", diff: "mudah", clue: "Penyanyi-penulis lagu Amerika yang merilis album 'Fearless' dan '1989' serta menggelar tur 'The Eras Tour'." },
+    { word: "BLACKPINK", topic: "musik", region: "global", diff: "mudah", clue: "Grup perempuan K-pop asuhan YG Entertainment beranggotakan Jisoo, Jennie, Rose, dan Lisa." },
+    { word: "GANGNAM STYLE", topic: "musik", region: "global", diff: "mudah", clue: "Lagu PSY dari Korea Selatan (2012) dengan tarian kuda yang menjadi video pertama di YouTube dengan satu miliar penayangan." },
+    { word: "JUSTIN BIEBER", topic: "musik", region: "global", diff: "mudah", clue: "Penyanyi asal Kanada yang ditemukan lewat video YouTube dan terkenal dengan lagu 'Baby'." },
+    { word: "HIP HOP", topic: "musik", region: "global", diff: "mudah", clue: "Genre musik dan budaya yang lahir di kawasan Bronx, New York, pada 1970-an, dengan rap sebagai salah satu unsurnya." },
+    { word: "BOHEMIAN RHAPSODY", topic: "musik", region: "global", diff: "sedang", clue: "Lagu epik band Queen (1975) yang memadukan balada, opera, dan rock; videonya menembus satu miliar penayangan di YouTube." },
+    { word: "SMELLS LIKE TEEN SPIRIT", topic: "musik", region: "global", diff: "sedang", clue: "Lagu grunge Nirvana (1991) dari album 'Nevermind' yang menjadi anthem generasi 90-an." },
+    { word: "HOTEL CALIFORNIA", topic: "musik", region: "global", diff: "sedang", clue: "Lagu ikonik band rock Amerika Eagles (1976) dengan solo gitar panjang di bagian akhir." },
+    { word: "DESPACITO", topic: "musik", region: "global", diff: "sedang", clue: "Lagu pop Latin (2017) Luis Fonsi dan Daddy Yankee; versi remix-nya menghadirkan Justin Bieber." },
+    { word: "SHAPE OF YOU", topic: "musik", region: "global", diff: "sedang", clue: "Lagu Ed Sheeran (2017) dari album 'Divide'." },
+    { word: "BILLIE EILISH", topic: "musik", region: "global", diff: "sedang", clue: "Penyanyi muda Amerika yang meraih Grammy lewat lagu 'Bad Guy'." },
+    { word: "ORKESTRA SIMFONI", topic: "musik", region: "global", diff: "sedang", clue: "Kelompok besar pemain alat gesek, tiup, dan perkusi yang dipimpin seorang konduktor." },
+    { word: "LUDWIG VAN BEETHOVEN", topic: "musik", region: "global", diff: "sulit", clue: "Komponis Jerman yang tetap menciptakan karya agung, termasuk Simfoni No. 9, meski kehilangan pendengarannya." },
+    { word: "WOLFGANG AMADEUS MOZART", topic: "musik", region: "global", diff: "sulit", clue: "Komponis jenius Austria yang sudah menggubah karya sejak kecil, pencipta 'Eine kleine Nachtmusik'." },
+
+    // ---------------- ARTIS • INDONESIA ----------------
+    { word: "WARKOP DKI", topic: "artis", region: "id", diff: "mudah", clue: "Trio komedian legendaris beranggotakan Dono, Kasino, dan Indro yang membintangi banyak film komedi." },
+    { word: "RAFFI AHMAD", topic: "artis", region: "id", diff: "mudah", clue: "Presenter dan aktor, pendiri RANS Entertainment bersama istrinya, Nagita Slavina." },
+    { word: "NAGITA SLAVINA", topic: "artis", region: "id", diff: "mudah", clue: "Aktris dan presenter, istri Raffi Ahmad, yang sering tampil bersama di konten RANS Entertainment." },
+    { word: "TUKUL ARWANA", topic: "artis", region: "id", diff: "mudah", clue: "Komedian dan presenter yang terkenal dengan jargon 'Kembali ke laptop' di acara Empat Mata." },
+    { word: "DIAN SASTROWARDOYO", topic: "artis", region: "id", diff: "sedang", clue: "Aktris yang memerankan tokoh Cinta di film 'Ada Apa dengan Cinta?' (2002)." },
+    { word: "NICHOLAS SAPUTRA", topic: "artis", region: "id", diff: "sedang", clue: "Aktor yang memerankan Rangga di 'Ada Apa dengan Cinta?' dan Soe Hok Gie dalam film 'Gie'." },
+    { word: "REZA RAHADIAN", topic: "artis", region: "id", diff: "sedang", clue: "Aktor yang memerankan B.J. Habibie dalam film 'Habibie dan Ainun' (2012)." },
+    { word: "BUNGA CITRA LESTARI", topic: "artis", region: "id", diff: "sedang", clue: "Penyanyi dan aktris yang memerankan Ainun dalam film 'Habibie dan Ainun' (2012), akrab disapa BCL." },
+    { word: "DEDDY CORBUZIER", topic: "artis", region: "id", diff: "sedang", clue: "Mantan pesulap yang menjadi presenter dan pemilik podcast 'Close the Door'." },
+    { word: "IKO UWAIS", topic: "artis", region: "id", diff: "sedang", clue: "Aktor laga pesilat yang terkenal lewat film 'The Raid' (2011)." },
+    { word: "BENE DION", topic: "artis", region: "id", diff: "sedang", clue: "Komedian Batak, salah satu pemeran dan personel podcast 'Agak Laen'." },
+    { word: "BENYAMIN SUEB", topic: "artis", region: "id", diff: "sedang", clue: "Seniman Betawi serba bisa (penyanyi, pelawak, aktor) dengan lagu 'Kompor Mleduk'." },
+    { word: "CHRISTINE HAKIM", topic: "artis", region: "id", diff: "sulit", clue: "Aktris senior yang memerankan pejuang perempuan Aceh dalam film 'Tjoet Nja Dhien' (1988)." },
+    { word: "JOKO ANWAR", topic: "artis", region: "id", diff: "sulit", clue: "Sutradara dan penulis skenario di balik 'Pengabdi Setan' (2017) dan 'Gundala' (2019)." },
+    { word: "RIRI RIZA", topic: "artis", region: "id", diff: "sulit", clue: "Sutradara film 'Laskar Pelangi' (2008) dan 'Gie' (2005)." },
+    { word: "MIRA LESMANA", topic: "artis", region: "id", diff: "sulit", clue: "Produser film yang bersama Riri Riza menggarap 'Petualangan Sherina', 'Ada Apa dengan Cinta?', dan 'Laskar Pelangi'." },
+
+    // ---------------- ARTIS • GLOBAL ----------------
+    { word: "TOM CRUISE", topic: "artis", region: "global", diff: "mudah", clue: "Aktor Hollywood yang terkenal sebagai Ethan Hunt dalam waralaba film 'Mission: Impossible'." },
+    { word: "JACKIE CHAN", topic: "artis", region: "global", diff: "mudah", clue: "Aktor laga Hong Kong yang terkenal dengan adegan aksi sendiri bercampur komedi, bintang 'Rush Hour'." },
+    { word: "EMMA WATSON", topic: "artis", region: "global", diff: "mudah", clue: "Aktris Inggris yang memerankan Hermione Granger di film 'Harry Potter'." },
+    { word: "DANIEL RADCLIFFE", topic: "artis", region: "global", diff: "mudah", clue: "Aktor Inggris pemeran Harry Potter dalam delapan film." },
+    { word: "JOHNNY DEPP", topic: "artis", region: "global", diff: "mudah", clue: "Aktor Amerika pemeran Kapten Jack Sparrow di 'Pirates of the Caribbean'." },
+    { word: "WILL SMITH", topic: "artis", region: "global", diff: "mudah", clue: "Aktor dan rapper yang membintangi 'The Fresh Prince of Bel-Air' dan 'Men in Black'." },
+    { word: "TOM HOLLAND", topic: "artis", region: "global", diff: "mudah", clue: "Aktor Inggris yang memerankan Peter Parker atau Spider-Man di Marvel Cinematic Universe." },
+    { word: "BRUCE LEE", topic: "artis", region: "global", diff: "mudah", clue: "Legenda seni bela diri dan aktor film 'Enter the Dragon' (1973), pencetus aliran Jeet Kune Do." },
+    { word: "LEONARDO DICAPRIO", topic: "artis", region: "global", diff: "sedang", clue: "Aktor Hollywood yang bermain di 'Titanic' dan meraih Oscar Aktor Terbaik lewat 'The Revenant'." },
+    { word: "KEANU REEVES", topic: "artis", region: "global", diff: "sedang", clue: "Aktor yang memerankan Neo dalam film 'The Matrix' (1999) dan tokoh utama 'John Wick'." },
+    { word: "SCARLETT JOHANSSON", topic: "artis", region: "global", diff: "sedang", clue: "Aktris Amerika pemeran Black Widow di Marvel Cinematic Universe." },
+    { word: "MORGAN FREEMAN", topic: "artis", region: "global", diff: "sedang", clue: "Aktor Amerika bersuara berat yang kerap menjadi narator, bintang 'The Shawshank Redemption'." },
+    { word: "CHRIS HEMSWORTH", topic: "artis", region: "global", diff: "sedang", clue: "Aktor Australia pemeran Thor, dewa petir dalam Marvel Cinematic Universe." },
+    { word: "ZENDAYA", topic: "artis", region: "global", diff: "sedang", clue: "Aktris Amerika bintang serial 'Euphoria' dan pemeran MJ di film Spider-Man bersama Tom Holland." },
+    { word: "ROBERT DOWNEY JUNIOR", topic: "artis", region: "global", diff: "sulit", clue: "Aktor Amerika pemeran Iron Man (Tony Stark) di Marvel Cinematic Universe yang meraih Oscar lewat 'Oppenheimer'." },
+    { word: "MERYL STREEP", topic: "artis", region: "global", diff: "sulit", clue: "Aktris Amerika dengan jumlah nominasi Oscar kategori akting terbanyak sepanjang masa." },
+
+    // ---------------- FILM • INDONESIA ----------------
+    { word: "ADA APA DENGAN CINTA", topic: "film", region: "id", diff: "mudah", clue: "Film remaja (2002) dengan tokoh Cinta dan Rangga yang gemar puisi 'Aku' karya Chairil Anwar." },
+    { word: "LASKAR PELANGI", topic: "film", region: "id", diff: "mudah", clue: "Film (2008) arahan Riri Riza tentang perjuangan anak-anak Belitung bersekolah, diadaptasi dari novel Andrea Hirata." },
+    { word: "AGAK LAEN", topic: "film", region: "id", diff: "mudah", clue: "Film horor-komedi (2024) tentang empat sahabat pengelola rumah hantu di pasar malam; dibintangi Bene Dion, Oki Rengga, Boris Bokir, dan Indra Jegel." },
+    { word: "PENGABDI SETAN", topic: "film", region: "id", diff: "sedang", clue: "Film horor (2017) karya Joko Anwar tentang keluarga yang diteror; buatan ulang film tahun 1980." },
+    { word: "KKN DI DESA PENARI", topic: "film", region: "id", diff: "sedang", clue: "Film horor (2022) yang diangkat dari utas viral tentang mahasiswa KKN di sebuah desa di Jawa Timur." },
+    { word: "THE RAID", topic: "film", region: "id", diff: "sedang", clue: "Film laga (2011) arahan Gareth Evans dengan bintang Iko Uwais yang menampilkan seni bela diri pencak silat." },
+    { word: "AYAT AYAT CINTA", topic: "film", region: "id", diff: "sedang", clue: "Film (2008) arahan Hanung Bramantyo yang diangkat dari novel Habiburrahman El Shirazy, dengan tokoh Fahri." },
+    { word: "GUNDALA", topic: "film", region: "id", diff: "sedang", clue: "Film superhero (2019) arahan Joko Anwar yang menjadi pembuka Jagat Sinema Bumilangit." },
+    { word: "JELANGKUNG", topic: "film", region: "id", diff: "sedang", clue: "Film horor (2001) yang membangkitkan kembali genre horor Indonesia lewat ritual pemanggil arwah." },
+    { word: "HABIBIE DAN AINUN", topic: "film", region: "id", diff: "sedang", clue: "Film biografi (2012) tentang kisah cinta B.J. Habibie dan istrinya; judul resminya memakai tanda &." },
+    { word: "PETUALANGAN SHERINA", topic: "film", region: "id", diff: "sedang", clue: "Film musikal anak (2000) yang dibintangi Sherina Munaf dan disutradarai Riri Riza." },
+    { word: "WIRO SABLENG", topic: "film", region: "id", diff: "sedang", clue: "Pendekar berkapak Naga Geni 212 dari novel Bastian Tito yang difilmkan pada 2018 dengan bintang Vino G. Bastian." },
+    { word: "GITA CINTA DARI SMA", topic: "film", region: "id", diff: "sulit", clue: "Film remaja romantis (1979) dengan tokoh Galih dan Ratna, diperankan Rano Karno dan Yessy Gusman." },
+    { word: "GENGSI DONG", topic: "film", region: "id", diff: "sulit", clue: "Film komedi Warkop DKI (1980) tentang tiga mahasiswa yang saling pamer gengsi demi memikat gadis bernama Rita." },
+    { word: "TJOET NJA DHIEN", topic: "film", region: "id", diff: "sulit", clue: "Film (1988) karya Eros Djarot tentang pahlawan perempuan Aceh yang melawan Belanda." },
+    { word: "MARLINA SI PEMBUNUH", topic: "film", region: "id", diff: "sulit", clue: "Film (2017) arahan Mouly Surya yang tayang di Cannes, tentang janda di Sumba yang melawan perampok; judul lengkapnya berlanjut 'dalam Empat Babak'." },
+    { word: "BADAI PASTI BERLALU", topic: "film", region: "id", diff: "sulit", clue: "Film (1977) karya Teguh Karya yang soundtrack-nya digarap antara lain oleh Chrisye dan Eros Djarot." },
+
+    // ---------------- FILM • GLOBAL ----------------
+    { word: "TITANIC", topic: "film", region: "global", diff: "mudah", clue: "Film romansa-bencana (1997) arahan James Cameron tentang kapal pesiar yang tenggelam; meraih 11 Piala Oscar." },
+    { word: "THE LION KING", topic: "film", region: "global", diff: "mudah", clue: "Film animasi Disney (1994) tentang anak singa Simba yang kelak menjadi raja." },
+    { word: "HARRY POTTER", topic: "film", region: "global", diff: "mudah", clue: "Seri film tentang penyihir muda yang bersekolah di Hogwarts, diadaptasi dari novel J.K. Rowling." },
+    { word: "JURASSIC PARK", topic: "film", region: "global", diff: "mudah", clue: "Film petualangan (1993) arahan Steven Spielberg tentang taman hiburan berisi dinosaurus hasil kloning." },
+    { word: "STAR WARS", topic: "film", region: "global", diff: "mudah", clue: "Waralaba fiksi ilmiah buatan George Lucas yang dimulai pada 1977, dengan Jedi, Sith, dan pedang cahaya." },
+    { word: "AVATAR", topic: "film", region: "global", diff: "mudah", clue: "Film fiksi ilmiah James Cameron (2009) yang berlatar di planet Pandora." },
+    { word: "FINDING NEMO", topic: "film", region: "global", diff: "mudah", clue: "Film animasi Pixar (2003) tentang ikan badut yang mencari anaknya, ditemani Dory." },
+    { word: "TOY STORY", topic: "film", region: "global", diff: "mudah", clue: "Film animasi komputer penuh pertama (1995) produksi Pixar tentang mainan Woody dan Buzz Lightyear." },
+    { word: "SPIDER MAN", topic: "film", region: "global", diff: "mudah", clue: "Pahlawan super bernama asli Peter Parker yang mendapat kekuatan setelah digigit laba-laba." },
+    { word: "SPIRITED AWAY", topic: "film", region: "global", diff: "sedang", clue: "Film animasi Studio Ghibli (2001) arahan Hayao Miyazaki yang menang Oscar Film Animasi Terbaik." },
+    { word: "THE GODFATHER", topic: "film", region: "global", diff: "sedang", clue: "Film mafia (1972) arahan Francis Ford Coppola dengan Marlon Brando sebagai Don Vito Corleone." },
+    { word: "THE DARK KNIGHT", topic: "film", region: "global", diff: "sedang", clue: "Film Batman (2008) arahan Christopher Nolan; Heath Ledger sebagai Joker meraih Oscar secara anumerta." },
+    { word: "FORREST GUMP", topic: "film", region: "global", diff: "sedang", clue: "Film (1994) dibintangi Tom Hanks dengan ucapan terkenal bahwa hidup seperti sekotak cokelat." },
+    { word: "PARASITE", topic: "film", region: "global", diff: "sedang", clue: "Film Korea Selatan karya Bong Joon-ho; film berbahasa non-Inggris pertama yang menang Oscar Film Terbaik." },
+    { word: "INCEPTION", topic: "film", region: "global", diff: "sedang", clue: "Film (2010) karya Christopher Nolan tentang pencurian ide lewat mimpi di dalam mimpi." },
+    { word: "THE MATRIX", topic: "film", region: "global", diff: "sedang", clue: "Film fiksi ilmiah (1999) karya Wachowski bersaudara tentang dunia simulasi dengan pilihan pil merah atau biru." },
+    { word: "THE SHAWSHANK REDEMPTION", topic: "film", region: "global", diff: "sulit", clue: "Film drama (1994) tentang narapidana Andy Dufresne yang merencanakan pelarian dari penjara Shawshank." }
+];
+
 // Kamus tambahan 5 huruf untuk validasi tebakan pemain di Wordle
 const EXTRA_WORDS_5 = [
     "MAKAN","MINUM","TIDUR","RUMAH","PINTU","KURSI","LAMPU","MOBIL","MOTOR","KAPAL",
@@ -245,6 +446,7 @@ const EXTRA_WORDS_5 = [
 
 const VALID_WORDLE_SET = new Set([
     ...WORDLE_BANK.map(item => item.word),
+    ...HIBURAN_WORDLE.map(item => item.word),
     ...EXTRA_WORDS_5
 ]);
 
@@ -263,7 +465,8 @@ class KataKitaApp {
         this.mode = "solo"; // "solo" | "multi"
         this.gameType = "wordle"; // "wordle" | "hangman"
         this.selectedDifficulty = "sedang"; // "mudah" | "sedang" | "sulit"
-        this.selectedTopic = "acak"; // "acak" | "kuliner" | "alam" | "hewan" | "budaya" | "sains" | "sastra"
+        this.selectedTopic = "acak"; // "acak" | "kuliner" | "alam" | "hewan" | "budaya" | "sains" | "sastra" | "musik" | "artis" | "film"
+        this.selectedRegion = "indonesia"; // "indonesia" | "global" | "campur" (berlaku untuk Musik, Artis, Film)
 
         this.isHost = false;
         this.roomCode = "";
@@ -377,6 +580,15 @@ class KataKitaApp {
             });
         });
 
+        // Pemilih Wilayah di Home (Indonesia / Global / Campur)
+        document.querySelectorAll("#home-region-group .topic-chip").forEach(chip => {
+            chip.addEventListener("click", () => {
+                document.querySelectorAll("#home-region-group .topic-chip").forEach(c => c.classList.remove("active"));
+                chip.classList.add("active");
+                this.selectedRegion = chip.dataset.region;
+            });
+        });
+
         // Tombol Solo di Home
         document.getElementById("btn-solo-wordle").addEventListener("click", () => {
             this.myName = this.getPlayerNameInput();
@@ -422,26 +634,33 @@ class KataKitaApp {
             this.showScreen("screen-home");
         });
 
-        // Sinkronisasi Dropdown Kesulitan & Topik di Layar Vote Multiplayer
+        // Sinkronisasi Dropdown Kesulitan, Topik & Wilayah di Layar Vote Multiplayer
         const voteDiffSelect = document.getElementById("vote-difficulty-select");
         const voteTopicSelect = document.getElementById("vote-topic-select");
+        const voteRegionSelect = document.getElementById("vote-region-select");
 
-        voteDiffSelect.addEventListener("change", () => {
-            this.selectedDifficulty = voteDiffSelect.value;
+        const broadcastSettings = () => {
             this.sendNetworkMessage({
                 type: "SYNC_SETTINGS",
                 difficulty: this.selectedDifficulty,
-                topic: this.selectedTopic
+                topic: this.selectedTopic,
+                region: this.selectedRegion
             });
+        };
+
+        voteDiffSelect.addEventListener("change", () => {
+            this.selectedDifficulty = voteDiffSelect.value;
+            broadcastSettings();
         });
 
         voteTopicSelect.addEventListener("change", () => {
             this.selectedTopic = voteTopicSelect.value;
-            this.sendNetworkMessage({
-                type: "SYNC_SETTINGS",
-                difficulty: this.selectedDifficulty,
-                topic: this.selectedTopic
-            });
+            broadcastSettings();
+        });
+
+        voteRegionSelect.addEventListener("change", () => {
+            this.selectedRegion = voteRegionSelect.value;
+            broadcastSettings();
         });
 
         // Voting Actions
@@ -530,23 +749,42 @@ class KataKitaApp {
     // PEMILIHAN SOAL CERDAS (TOPIK & KESULITAN)
     // ==========================================
     pickQuestion(gameType, topic, difficulty) {
-        const bank = gameType === "wordle" ? WORDLE_BANK : HANGMAN_BANK;
+        const bank = gameType === "wordle"
+            ? [...WORDLE_BANK, ...HIBURAN_WORDLE]
+            : [...HANGMAN_BANK, ...HIBURAN_HANGMAN];
 
-        // Filter 1: Sesuai topik dan sesuai kesulitan
-        let pool = bank.filter(item => {
-            const matchTopic = topic === "acak" || item.topic === topic;
-            const matchDiff = item.diff === difficulty;
-            return matchTopic && matchDiff;
-        });
+        const region = this.selectedRegion;
+        const matchTopic = item => topic === "acak" || item.topic === topic;
+        // Soal topik lama (tanpa region) selalu lolos; soal Musik/Artis/Film difilter sesuai wilayah
+        const matchRegion = item => !item.region || region === "campur" ||
+            (region === "indonesia" && item.region === "id") ||
+            (region === "global" && item.region === "global");
 
-        // Fallback 1: Jika kombinasi spesifik kosong, ambil sesuai topik saja
+        // Filter 1: topik + wilayah + kesulitan
+        let pool = bank.filter(item => matchTopic(item) && matchRegion(item) && item.diff === difficulty);
+
+        // Fallback 1: topik + wilayah (abaikan kesulitan)
         if (pool.length === 0) {
-            pool = bank.filter(item => topic === "acak" || item.topic === topic);
+            pool = bank.filter(item => matchTopic(item) && matchRegion(item));
         }
 
-        // Fallback 2: Ambil dari seluruh bank
+        // Fallback 2: topik saja
+        if (pool.length === 0) {
+            pool = bank.filter(matchTopic);
+        }
+
+        // Fallback 3: seluruh bank
         if (pool.length === 0) {
             pool = bank;
+        }
+
+        // Mode Campur: utamakan soal Indonesia (sekitar 70%)
+        if (region === "campur") {
+            const idPool = pool.filter(item => item.region === "id");
+            const globalPool = pool.filter(item => item.region === "global");
+            if (idPool.length > 0 && globalPool.length > 0) {
+                pool = Math.random() < 0.7 ? idPool : globalPool;
+            }
         }
 
         // Hindari kata yang persis baru saja keluar
@@ -701,7 +939,8 @@ class KataKitaApp {
                         hostName: this.myName,
                         guestName: this.peerName,
                         difficulty: this.selectedDifficulty,
-                        topic: this.selectedTopic
+                        topic: this.selectedTopic,
+                        region: this.selectedRegion
                     });
                     this.showToast(`${this.peerName} bergabung ke Room! 🎉`);
                     this.enterVotingScreen();
@@ -713,6 +952,7 @@ class KataKitaApp {
                     this.peerName = data.hostName || "Host";
                     this.selectedDifficulty = data.difficulty || "sedang";
                     this.selectedTopic = data.topic || "acak";
+                    this.selectedRegion = data.region || "indonesia";
                     this.showToast(`Terhubung dengan ${this.peerName}! 🎉`);
                     this.enterVotingScreen();
                 }
@@ -721,9 +961,11 @@ class KataKitaApp {
             case "SYNC_SETTINGS":
                 this.selectedDifficulty = data.difficulty;
                 this.selectedTopic = data.topic;
+                if (data.region) this.selectedRegion = data.region;
                 document.getElementById("vote-difficulty-select").value = this.selectedDifficulty;
                 document.getElementById("vote-topic-select").value = this.selectedTopic;
-                this.showToast(`Pengaturan diubah: ${DIFF_LABELS[this.selectedDifficulty]} • ${TOPIC_LABELS[this.selectedTopic]}`);
+                document.getElementById("vote-region-select").value = this.selectedRegion;
+                this.showToast(`Pengaturan diubah: ${DIFF_LABELS[this.selectedDifficulty]} • ${TOPIC_LABELS[this.selectedTopic]} • ${REGION_LABELS[this.selectedRegion]}`);
                 break;
 
             case "CAST_VOTE":
@@ -742,6 +984,7 @@ class KataKitaApp {
             case "START_GAME":
                 if (data.difficulty) this.selectedDifficulty = data.difficulty;
                 if (data.topic) this.selectedTopic = data.topic;
+                if (data.region) this.selectedRegion = data.region;
                 if (data.tieBreakMsg) {
                     this.showToast(data.tieBreakMsg, 2600);
                 }
@@ -778,6 +1021,7 @@ class KataKitaApp {
         document.getElementById("vote-room-code").textContent = this.roomCode;
         document.getElementById("vote-difficulty-select").value = this.selectedDifficulty;
         document.getElementById("vote-topic-select").value = this.selectedTopic;
+        document.getElementById("vote-region-select").value = this.selectedRegion;
 
         const p1Name = this.isHost ? this.myName : this.peerName;
         const p2Name = this.isHost ? this.peerName : this.myName;
@@ -850,6 +1094,7 @@ class KataKitaApp {
                 wordObj,
                 difficulty: this.selectedDifficulty,
                 topic: this.selectedTopic,
+                region: this.selectedRegion,
                 firstTurn,
                 tieBreakMsg
             });
@@ -877,7 +1122,8 @@ class KataKitaApp {
         // Update badge topik & kesulitan di atas arena
         const topicBadge = document.getElementById("game-topic-badge");
         const diffBadge = document.getElementById("game-diff-badge");
-        topicBadge.textContent = TOPIC_LABELS[this.secretTopic] || TOPIC_LABELS[this.selectedTopic];
+        const regionFlag = wordObj.region === "id" ? " 🇮🇩" : (wordObj.region === "global" ? " 🌍" : "");
+        topicBadge.textContent = (TOPIC_LABELS[this.secretTopic] || TOPIC_LABELS[this.selectedTopic]) + regionFlag;
         diffBadge.textContent = DIFF_LABELS[this.selectedDifficulty];
         diffBadge.dataset.diff = this.selectedDifficulty;
 

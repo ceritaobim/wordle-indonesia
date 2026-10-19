@@ -1338,3 +1338,9 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+/* Pemilih wilayah (Musik, Artis, Film) pada layar voting */
+.setting-row-full {
+    grid-column: 1 / -1;
+}
+

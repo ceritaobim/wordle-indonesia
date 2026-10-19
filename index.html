@@ -88,6 +88,19 @@
                     <button type="button" class="topic-chip" data-topic="budaya">🎭 Budaya &amp; Daerah</button>
                     <button type="button" class="topic-chip" data-topic="sains">🔬 Sains &amp; Teknologi</button>
                     <button type="button" class="topic-chip" data-topic="sastra">📜 Sastra &amp; Kiasan</button>
+                    <button type="button" class="topic-chip" data-topic="musik">🎵 Musik</button>
+                    <button type="button" class="topic-chip" data-topic="artis">⭐ Artis &amp; Selebriti</button>
+                    <button type="button" class="topic-chip" data-topic="film">🎬 Film</button>
+                </div>
+            </div>
+
+            <!-- PILIHAN WILAYAH (Musik, Artis, Film) -->
+            <div class="config-block">
+                <label class="config-label">🌏 Wilayah (untuk Musik, Artis &amp; Film)</label>
+                <div class="topic-grid" id="home-region-group">
+                    <button type="button" class="topic-chip active" data-region="indonesia">🇮🇩 Indonesia</button>
+                    <button type="button" class="topic-chip" data-region="global">🌍 Global</button>
+                    <button type="button" class="topic-chip" data-region="campur">🔀 Campur</button>
                 </div>
             </div>
 
@@ -195,6 +208,17 @@
                         <option value="budaya">🎭 Budaya &amp; Daerah</option>
                         <option value="sains">🔬 Sains &amp; Teknologi</option>
                         <option value="sastra">📜 Sastra &amp; Kiasan</option>
+                        <option value="musik">🎵 Musik</option>
+                        <option value="artis">⭐ Artis &amp; Selebriti</option>
+                        <option value="film">🎬 Film</option>
+                    </select>
+                </div>
+                <div class="setting-row setting-row-full">
+                    <label>🌏 Wilayah (Musik, Artis, Film):</label>
+                    <select id="vote-region-select" class="select-input">
+                        <option value="indonesia" selected>🇮🇩 Indonesia (Utama)</option>
+                        <option value="global">🌍 Global</option>
+                        <option value="campur">🔀 Campur (Dominan Indonesia)</option>
                     </select>
                 </div>
             </div>
@@ -352,7 +376,10 @@
                 <p><strong>2. Hangman Kreatif (6–15 Huruf &amp; Multi-Kata):</strong></p>
                 <p>Hangman kini tidak dibatasi 5 huruf! Kamu akan menghadapi kata panjang (seperti <code>KHATULISTIWA</code>), kuliner &amp; budaya (<code>RENDANG SAPI</code>, <code>WAYANG KULIT</code>), hingga kiasan Nusantara (<code>BANTING TULANG</code>). Spasi antar kata otomatis dipisahkan.</p>
 
-                <p><strong>3. Giliran Multiplayer:</strong></p>
+                <p><strong>3. Topik Musik, Artis &amp; Film + Wilayah:</strong></p>
+                <p>Pilih wilayah <strong>🇮🇩 Indonesia</strong> (utama), <strong>🌍 Global</strong>, atau <strong>🔀 Campur</strong> (dominan Indonesia). Petunjuk dibuat dari fakta nyata: lagu, band, aktor/aktris, komedian, hingga film dan sutradaranya.</p>
+
+                <p><strong>4. Giliran Multiplayer:</strong></p>
                 <p>Buat Room atau masukkan Kode Room lalu tekan <strong>Enter</strong>. Kedua pemain dapat memilih topik, tingkat kesulitan, dan melakukan <strong>Voting Game</strong>. Setiap tebakan dilakukan secara bergantian!</p>
             </div>
         </div>
