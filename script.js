@@ -1,333 +1,276 @@
-// ==========================================================
-// KATAKITA.ID - WORDLE & HANGMAN MULTIPLAYER BAHASA INDONESIA
-// ==========================================================
+// =========================================================================
+// KATAKITA.ID - WORDLE & HANGMAN KREATIF (MULTI-TOPIK & TINGKAT KESULITAN)
+// =========================================================================
 
-const TARGET_WORDS = [
-    { word: "MAKAN", clue: "Memasukkan makanan pokok ke dalam mulut serta mengunyah dan menelannya." },
-    { word: "MINUM", clue: "Memasukkan air atau benda cair ke dalam mulut dan meneguknya." },
-    { word: "TIDUR", clue: "Mengistirahatkan badan dan kesadaran (biasanya dengan memejamkan mata)." },
-    { word: "RUMAH", clue: "Bangunan untuk tempat tinggal keluarga." },
-    { word: "PINTU", clue: "Tempat untuk masuk dan keluar ruangan." },
-    { word: "KURSI", clue: "Tempat duduk yang berkaki dan bersandaran." },
-    { word: "LAMPU", clue: "Alat untuk menerangi ruangan di malam hari." },
-    { word: "MOBIL", clue: "Kendaraan darat yang digerakkan oleh tenaga mesin beroda empat." },
-    { word: "MOTOR", clue: "Kendaraan beroda dua yang digerakkan oleh mesin." },
-    { word: "KAPAL", clue: "Kendaraan pengangkut penumpang dan barang di laut atau sungai." },
-    { word: "KERJA", clue: "Kegiatan melakukan sesuatu; pencarian atau nafkah." },
-    { word: "PASAR", clue: "Tempat orang berjual beli kebutuhan sehari-hari." },
-    { word: "BERAS", clue: "Padi yang telah terkelupas kulitnya dan siap ditanak menjadi nasi." },
-    { word: "SAYUR", clue: "Daun-daunan atau tumbuhan yang dimasak sebagai teman makan nasi." },
-    { word: "TELUR", clue: "Benda bercangkang yang dihasilkan oleh unggas (ayam, bebek, dsb)." },
-    { word: "GARAM", clue: "Senyawa kristal putih berasa asin, biasanya dari air laut." },
-    { word: "MANIS", clue: "Rasa seperti gula atau madu." },
-    { word: "PAHIT", clue: "Rasa tidak sedap seperti empedu atau kopi tanpa gula." },
-    { word: "PEDAS", clue: "Rasa seperti cabai atau merica." },
-    { word: "PANAS", clue: "Terasa seperti terbakar atau dekat dengan api; bersuhu tinggi." },
-    { word: "SEJUK", clue: "Terasa agak dingin, nyaman, dan segar." },
-    { word: "HUJAN", clue: "Titik-titik air yang berjatuhan dari udara karena proses pendinginan." },
-    { word: "ANGIN", clue: "Gerakan udara dari daerah yang bertekanan tinggi ke rendah." },
-    { word: "BADAI", clue: "Angin kencang yang menyertai cuaca buruk." },
-    { word: "PULAU", clue: "Tanah atau daratan yang dikelilingi air (di laut atau danau)." },
-    { word: "DANAU", clue: "Genangan air yang amat luas dan dikelilingi daratan." },
-    { word: "HUTAN", clue: "Tanah luas yang ditumbuhi pohon-pohon secara alami." },
-    { word: "POHON", clue: "Tumbuhan yang batangnya keras dan besar." },
-    { word: "BUNGA", clue: "Bagian tumbuhan yang elok warnanya dan harum baunya." },
-    { word: "TANAH", clue: "Permukaan bumi atau lapisan bumi yang di atas sekali." },
-    { word: "PASIR", clue: "Butir-butir batu yang halus di pantai atau gurun." },
-    { word: "BULAN", clue: "Benda langit yang mengitari bumi dan bersinar pada malam hari." },
-    { word: "MALAM", clue: "Waktu setelah matahari terbenam hingga matahari terbit." },
-    { word: "SIANG", clue: "Bagian hari yang terang dari matahari terbit sampai terbenam." },
-    { word: "SENJA", clue: "Waktu ketika matahari baru saja terbenam (setengah gelap)." },
-    { word: "WAKTU", clue: "Seluruh rangkaian saat ketika proses atau keadaan berlangsung." },
-    { word: "TAHUN", clue: "Masa yang lamanya dua belas bulan." },
-    { word: "PEKAN", clue: "Masa tujuh hari; minggu." },
-    { word: "BESOK", clue: "Hari sesudah hari ini." },
-    { word: "CINTA", clue: "Perasaan suka dan sayang yang sangat mendalam." },
-    { word: "RINDU", clue: "Sangat ingin dan berharap benar bertemu seseorang." },
-    { word: "KASIH", clue: "Perasaan sayang atau menaruh belas kasihan." },
-    { word: "MARAH", clue: "Sangat tidak senang karena diperlakukan tidak sepantasnya." },
-    { word: "SEDIH", clue: "Merasa sangat pilu dalam hati; susah hati." },
-    { word: "TAKUT", clue: "Merasa gentar menghadapi sesuatu yang dianggap berbahaya." },
-    { word: "SABAR", clue: "Tahan menghadapi cobaan (tidak lekas marah atau putus asa)." },
-    { word: "JUJUR", clue: "Lurus hati; tidak berbohong; tidak curang." },
-    { word: "BENAR", clue: "Sesuai sebagaimana adanya; betul; tidak salah." },
-    { word: "CEPAT", clue: "Dalam waktu singkat dapat menempuh jarak cukup jauh; lekas." },
-    { word: "PELAN", clue: "Tidak cepat; lambat." },
-    { word: "BESAR", clue: "Lebih dari ukuran sedang; lawan dari kecil." },
-    { word: "KECIL", clue: "Kurang dari besar atau kurang dari ukuran biasa." },
-    { word: "SEHAT", clue: "Baik seluruh badan serta bagian-bagiannya (bebas dari sakit)." },
-    { word: "HIDUP", clue: "Masih terus ada, bergerak, dan bekerja sebagaimana mestinya." },
-    { word: "JALAN", clue: "Tempat untuk lalu lintas orang dan kendaraan." },
-    { word: "SUARA", clue: "Bunyi yang dikeluarkan dari mulut manusia atau alat musik." },
-    { word: "TULIS", clue: "Membuat huruf atau angka dengan pena atau pensil." },
-    { word: "KELAS", clue: "Ruang tempat belajar di sekolah." },
-    { word: "MURID", clue: "Anak yang sedang berguru atau bersekolah." },
-    { word: "KAWAN", clue: "Teman; sahabat; sekutu." },
-    { word: "TEMAN", clue: "Kawan; sahabat yang bersama-sama bekerja atau bermain." },
-    { word: "GAJAH", clue: "Binatang menyusui berbelalai panjang dan bergading." },
-    { word: "MACAN", clue: "Harimau; binatang buas pemakan daging dari suku kucing besar." },
-    { word: "SINGA", clue: "Binatang buas pemakan daging yang pejantannya bersurai lebat." },
-    { word: "SEMUT", clue: "Serangga kecil yang berjalan merayap dan hidup bergerombol." },
-    { word: "LEBAH", clue: "Serangga bersayap penghasil madu." },
-    { word: "BUAYA", clue: "Binatang melata berkulit tebal yang hidup di sungai atau rawa." },
-    { word: "ELANG", clue: "Burung pemangsa berparuh bengkok dan bercakar tajam." },
-    { word: "JERUK", clue: "Buah berbentuk bulat yang berasa asam atau manis segar." },
-    { word: "NANAS", clue: "Buah tropis berkulit berduri tempel dan bermahkota daun." },
-    { word: "MELON", clue: "Buah bulat berkulit hijau atau kuning dan berdaging manis berair." },
-    { word: "KURMA", clue: "Buah pohon palem dari Timur Tengah yang rasanya sangat manis." },
-    { word: "TOMAT", clue: "Buah bulat berwarna merah yang sering dipakai untuk sayur/sambal." },
-    { word: "CABAI", clue: "Buah tanaman yang rasanya pedas untuk bumbu masakan." },
-    { word: "KECAP", clue: "Cairan kental berwarna hitam dari kedelai yang difermentasi." },
-    { word: "PISAU", clue: "Bilah besi tipis dan tajam yang bertangkai sebagai alat pengiris." },
-    { word: "GARPU", clue: "Pasangan sendok yang ujungnya berjari-jari untuk menusuk lauk." },
-    { word: "GELAS", clue: "Tempat minum berbentuk tabung yang terbuat dari kaca." },
-    { word: "KASUR", clue: "Alas tidur yang terbuat dari busa, kapuk, atau pegas." },
-    { word: "KAMAR", clue: "Ruang yang bersekat dinding dan berpintu di dalam rumah." },
-    { word: "DAPUR", clue: "Ruang tempat memasak." },
-    { word: "KUNCI", clue: "Alat untuk membuka dan mengancing pintu atau gembok." },
-    { word: "SABUN", clue: "Bahan berbuih yang digunakan untuk mandi atau mencuci." },
-    { word: "JAKET", clue: "Baju luar berlengan panjang untuk menahan dingin atau angin." },
-    { word: "PERAK", clue: "Logam mulia berwarna putih mengilap." },
-    { word: "INTAN", clue: "Batu permata berkilauan berasal dari karbon murni; berlian." },
-    { word: "MERAH", clue: "Warna dasar yang serupa dengan warna darah atau bendera atas kita." },
-    { word: "PUTIH", clue: "Warna dasar yang serupa dengan warna kapas atau susu." },
-    { word: "HIJAU", clue: "Warna yang serupa dengan warna daun segar." },
-    { word: "DAMAI", clue: "Tidak ada perang; tenteram dan aman." },
-    { word: "SURAT", clue: "Kertas yang bertulis untuk dikirimkan kepada pihak lain." },
-    { word: "PUISI", clue: "Ragam sastra yang bahasanya terikat oleh irama dan rima." },
-    { word: "MUSIK", clue: "Nada atau suara yang disusun demikian rupa sehingga mengandung irama." },
-    { word: "GEMPA", clue: "Guncangan atau gerakan kulit bumi secara tiba-tiba." },
-    { word: "MIMPI", clue: "Sesuatu yang terlihat atau dialami dalam tidur; bunga tidur." }
+const TOPIC_LABELS = {
+    acak: "🎲 Acak",
+    kuliner: "🍜 Kuliner",
+    alam: "🌋 Alam",
+    hewan: "🐅 Hewan & Flora",
+    budaya: "🎭 Budaya",
+    sains: "🔬 Sains & Tekno",
+    sastra: "📜 Sastra & Kiasan"
+};
+
+const DIFF_LABELS = {
+    mudah: "Mudah",
+    sedang: "Sedang",
+    sulit: "Sulit 💀"
+};
+
+// =========================================================================
+// 1. BANK SOAL WORDLE (5 HURUF) BERDASARKAN TOPIK & TINGKAT KESULITAN
+// =========================================================================
+const WORDLE_BANK = [
+    // --- TOPIK: KULINER ---
+    { word: "BERAS", topic: "kuliner", diff: "mudah", clue: "Butir padi yang sudah dikupas kulitnya, siap ditanak menjadi nasi." },
+    { word: "TELUR", topic: "kuliner", diff: "mudah", clue: "Bahan pangan bercangkang yang dihasilkan oleh unggas." },
+    { word: "SAYUR", topic: "kuliner", diff: "mudah", clue: "Masakan berkuah atau dedaunan pendamping makan nasi." },
+    { word: "KECAP", topic: "kuliner", diff: "mudah", clue: "Saus kental berwarna hitam manis atau asin dari kedelai." },
+    { word: "BUBUR", topic: "kuliner", diff: "mudah", clue: "Makanan lembek dan berair yang dimasak dari beras." },
+    { word: "PECEL", topic: "kuliner", diff: "sedang", clue: "Hidangan rebusan sayuran yang disiram bumbu sambal kacang." },
+    { word: "RAWON", topic: "kuliner", diff: "sedang", clue: "Sup daging berkuah hitam khas Jawa Timur dengan bumbu keluak." },
+    { word: "GUDEG", topic: "kuliner", diff: "sedang", clue: "Masakan khas Yogyakarta dari nangka muda yang dimasak dengan santan." },
+    { word: "GULAI", topic: "kuliner", diff: "sedang", clue: "Masakan berkuah santan kuning kental berbumbu rempah." },
+    { word: "OPOR", topic: "kuliner", diff: "mudah", clue: "" }, // filtered if != 5
+    { word: "DODOL", topic: "kuliner", diff: "sedang", clue: "Penganan manis kenyal dari tepung ketan, santan, dan gula merah." },
+    { word: "TEMPE", topic: "kuliner", diff: "mudah", clue: "Makanan khas Indonesia dari fermentasi biji kedelai dengan ragi." },
+    { word: "ONCOM", topic: "kuliner", diff: "sulit", clue: "Makanan khas Jawa Barat hasil fermentasi bungkil tahu atau kacang." },
+    { word: "LEMPER", topic: "kuliner", diff: "sedang", clue: "" },
+    { word: "SERABI", topic: "kuliner", diff: "sedang", clue: "" },
+    { word: "TAPAI", topic: "kuliner", diff: "sulit", clue: "Penganan hasil fermentasi singkong atau ketan dengan ragi." },
+    { word: "BIKA", topic: "kuliner", diff: "sulit", clue: "" },
+    { word: "LAKSA", topic: "kuliner", diff: "sulit", clue: "Hidangan berkuah santan bumbu kuning berisi mi atau bihun." },
+    { word: "TAOCO", topic: "kuliner", diff: "sulit", clue: "Bumbu makanan dari kedelai rebus yang diawetkan dengan garam." },
+    { word: "EMPING", topic: "kuliner", diff: "sedang", clue: "" },
+    { word: "PETIS", topic: "kuliner", diff: "sulit", clue: "Bumbu kental berwarna hitam dari rebusan kaldu ikan atau udang." },
+    { word: "KULAK", topic: "kuliner", diff: "sulit", clue: "Membeli bahan pangan dalam jumlah besar untuk dijual kembali." },
+
+    // --- TOPIK: ALAM & GEOGRAFI ---
+    { word: "HUJAN", topic: "alam", diff: "mudah", clue: "Titik-titik air yang berjatuhan dari langit karena pendinginan." },
+    { word: "PULAU", topic: "alam", diff: "mudah", clue: "Daratan yang dikelilingi oleh air laut atau danau." },
+    { word: "DANAU", topic: "alam", diff: "mudah", clue: "Genangan air tawar yang sangat luas dan dikelilingi daratan." },
+    { word: "HUTAN", topic: "alam", diff: "mudah", clue: "Kawasan luas yang ditumbuhi pepohonan lebat secara alami." },
+    { word: "KABUT", topic: "alam", diff: "mudah", clue: "Uap air putih yang melayang dekat permukaan tanah atau gunung." },
+    { word: "BADAI", topic: "alam", diff: "sedang", clue: "Angin kencang ekstrem yang menyertai cuaca buruk di laut/darat." },
+    { word: "MUARA", topic: "alam", diff: "sedang", clue: "Tempat berakhirnya aliran sungai di laut atau danau." },
+    { word: "SELAT", topic: "alam", diff: "sedang", clue: "Laut sempit yang berada di antara dua pulau." },
+    { word: "TELUK", topic: "alam", diff: "sedang", clue: "Bagian laut yang menjorok ke daratan." },
+    { word: "LAHAR", topic: "alam", diff: "sedang", clue: "Lumpur batu panas yang mengalir keluar dari kawah gunung berapi." },
+    { word: "GURUN", topic: "alam", diff: "sedang", clue: "Padang luas yang tandus dan tertutup pasir." },
+    { word: "PALUNG", topic: "alam", diff: "sedang", clue: "" },
+    { word: "KAWAH", topic: "alam", diff: "sedang", clue: "Bagian puncak gunung berapi yang berbentuk lekukan besar." },
+    { word: "DELTA", topic: "alam", diff: "sulit", clue: "Tanah endapan berbentuk segitiga di muara sungai." },
+    { word: "ZENIT", topic: "alam", diff: "sulit", clue: "Titik puncak di angkasa tepat di atas kepala pengamat." },
+    { word: "NADIR", topic: "alam", diff: "sulit", clue: "Titik kaki langit yang berlawanan langsung dengan titik puncak (zenit)." },
+    { word: "KORAL", topic: "alam", diff: "sulit", clue: "Batu karang laut yang dibentuk oleh kerangka hewan polip." },
+    { word: "Geyser", topic: "alam", diff: "sulit", clue: "" },
+    { word: "FLORA", topic: "alam", diff: "sulit", clue: "Keseluruhan kehidupan jenis tumbuh-tumbuhan di suatu habitat." },
+
+    // --- TOPIK: HEWAN & FLORA ---
+    { word: "GAJAH", topic: "hewan", diff: "mudah", clue: "Mamalia darat terbesar yang memiliki belalai panjang dan gading." },
+    { word: "SINGA", topic: "hewan", diff: "mudah", clue: "Kucing besar pemangsa yang pejantannya memiliki surai lebat." },
+    { word: "BUAYA", topic: "hewan", diff: "mudah", clue: "Reptil besar berkulit keras yang hidup di sungai dan rawa." },
+    { word: "SEMUT", topic: "hewan", diff: "mudah", clue: "Serangga kecil pekerja keras yang hidup berkoloni di dalam tanah." },
+    { word: "LEBAH", topic: "hewan", diff: "mudah", clue: "Serangga bersengat penghasil madu dan penyerbuk bunga." },
+    { word: "ELANG", topic: "hewan", diff: "sedang", clue: "Burung pemangsa berparuh bengkok dan berpenglihatan tajam." },
+    { word: "BELUT", topic: "hewan", diff: "sedang", clue: "Ikan air tawar bertubuh panjang licin tanpa sisik seperti ular." },
+    { word: "PENYU", topic: "hewan", diff: "sedang", clue: "Kura-kura laut besar yang kakinya berbentuk dayung." },
+    { word: "BADAK", topic: "hewan", diff: "sedang", clue: "Mamalia berkulit tebal yang memiliki cula di atas hidungnya." },
+    { word: "TUPAI", topic: "hewan", diff: "sedang", clue: "Mamalia kecil pemakan buah yang pandai melompat dari dahan ke dahan." },
+    { word: "TAPIR", topic: "hewan", diff: "sulit", clue: "Satwa herbivora berhidung mirip belalai pendek dengan warna tubuh hitam-putih." },
+    { word: "KOALA", topic: "hewan", diff: "sulit", clue: "Mamalia berkantung pemakan daun eukaliptus asal Australia." },
+    { word: "LEMUR", topic: "hewan", diff: "sulit", clue: "Primata bermata bulat besar dan berekor cincin panjang dari Madagaskar." },
+    { word: "BAKAU", topic: "hewan", diff: "sulit", clue: "Tumbuhan pepohonan tropis berakar tunjang di tepi pantai berlumpur." },
+    { word: "PINUS", topic: "hewan", diff: "sulit", clue: "Pohon berdaun jarum yang menghasilkan getah terpentin dan runjung." },
+
+    // --- TOPIK: BUDAYA & DAERAH ---
+    { word: "BATIK", topic: "budaya", diff: "mudah", clue: "Kain bergambar khas Indonesia yang dibuat dengan malam (lilin)." },
+    { word: "CANDI", topic: "budaya", diff: "mudah", clue: "Bangunan kuno dari batu tempat pemujaan peninggalan zaman Hindu-Buddha." },
+    { word: "KERIS", topic: "budaya", diff: "mudah", clue: "Senjata tikam tradisional Nusantara yang bilahnya berkelok-kelok (luk)." },
+    { word: "TARI", topic: "budaya", diff: "mudah", clue: "" },
+    { word: "SILAT", topic: "budaya", diff: "mudah", clue: "Seni bela diri tradisional khas kepulauan Nusantara." },
+    { word: "KEBAYA", topic: "budaya", diff: "sedang", clue: "" },
+    { word: "TENUN", topic: "budaya", diff: "sedang", clue: "Kerajinan kain tradisional yang dibuat dengan menyilangkan benang pakan dan lungsin." },
+    { word: "REBAB", topic: "budaya", diff: "sedang", clue: "Alat musik gesek tradisional berdawai dua atau tiga dalam gamelan." },
+    { word: "LURIK", topic: "budaya", diff: "sedang", clue: "Kain tenun tradisional Jawa dengan corak jalur-jalur garis." },
+    { word: "DEBUS", topic: "budaya", diff: "sulit", clue: "Kesenian bela diri tradisional Banten yang mempertunjukkan kekebalan tubuh." },
+    { word: "TIFAP", topic: "budaya", diff: "sulit", clue: "" },
+    { word: "SUBAK", topic: "budaya", diff: "sulit", clue: "Sistem pengairan sawah tradisional secara kemasyarakatan di Bali." },
+    { word: "HONAI", topic: "budaya", diff: "sulit", clue: "Rumah adat tradisional masyarakat pegunungan Papua yang beratap jerami bundar." },
+    { word: "BADIK", topic: "budaya", diff: "sulit", clue: "Senjata tajam tradisional berbentuk pisau khas suku Bugis dan Makassar." },
+    { word: " Joglo", topic: "budaya", diff: "sedang", clue: "Bentuk atap rumah adat tradisional masyarakat Jawa." },
+
+    // --- TOPIK: SAINS & TEKNOLOGI ---
+    { word: "ROBOT", topic: "sains", diff: "mudah", clue: "Mesin otomatis yang dapat diprogram untuk melakukan tugas fisik." },
+    { word: "SINAR", topic: "sains", diff: "mudah", clue: "Pancaran gelombang cahaya yang menerangi ruang." },
+    { word: "LOGAM", topic: "sains", diff: "mudah", clue: "Unsur kimia keras penghantar listrik dan panas seperti besi atau tembaga." },
+    { word: "VIRUS", topic: "sains", diff: "mudah", clue: "Mikroorganisme parasit super kecil atau program perusak komputer." },
+    { word: "RADAR", topic: "sains", diff: "sedang", clue: "Alat pendeteksi posisi pesawat atau kapal menggunakan gelombang radio." },
+    { word: "ORBIT", topic: "sains", diff: "sedang", clue: "Jalur lintasan tetap benda langit mengelilingi bintang atau planet." },
+    { word: "KOMET", topic: "sains", diff: "sedang", clue: "Benda langit berekor cahaya yang mengelilingi matahari." },
+    { word: "FOSIL", topic: "sains", diff: "sedang", clue: "Sisa tulang atau jejak makhluk hidup purba yang telah membatu." },
+    { word: "LASER", topic: "sains", diff: "sedang", clue: "Pancaran cahaya monokromatik berintensitas sangat tinggi dan terarah." },
+    { word: "ENZIM", topic: "sains", diff: "sulit", clue: "Molekul protein kompleks yang berfungsi sebagai katalisator reaksi biokimia." },
+    { word: "KUOTA", topic: "sains", diff: "mudah", clue: "Batas jatah data internet atau alokasi jumlah tertentu." },
+    { word: "FOTON", topic: "sains", diff: "sulit", clue: "Partikel dasar kuantum radiasi elektromagnetik atau cahaya." },
+    { word: "ANODA", topic: "sains", diff: "sulit", clue: "Kutub elektroda bermuatan positif dalam sel elektrokimia." },
+    { word: "SERUM", topic: "sains", diff: "sulit", clue: "Bagian cair dari darah yang mengandung antibodi penangkal penyakit." },
+    { word: "OPTIK", topic: "sains", diff: "sulit", clue: "Cabang ilmu fisika yang mempelajari sifat cahaya dan lensa penglihatan." },
+
+    // --- TOPIK: SASTRA & KIASAN ---
+    { word: "PUISI", topic: "sastra", diff: "mudah", clue: "Ragam sastra yang bahasanya terikat oleh irama, rima, dan penyusunan bait." },
+    { word: "KISAH", topic: "sastra", diff: "mudah", clue: "Cerita tentang kejadian atau riwayat dalam kehidupan." },
+    { word: "TOKOH", topic: "sastra", diff: "mudah", clue: "Pemegang peran utama atau karakter dalam sebuah novel atau drama." },
+    { word: "DRAMA", topic: "sastra", diff: "mudah", clue: "Karya sastra yang menggambarkan kehidupan lewat dialog dan dipentaskan." },
+    { word: "SAJAK", topic: "sastra", diff: "sedang", clue: "Gubahan sastra berbentuk puisi yang sangat mementingkan keselarasan bunyi." },
+    { word: "PROSA", topic: "sastra", diff: "sedang", clue: "Karangan bebas yang tidak terikat oleh kaidah rima maupun baris seperti puisi." },
+    { word: "MAJAS", topic: "sastra", diff: "sedang", clue: "Gaya bahasa kiasan untuk memperoleh efek keindahan dalam karya sastra." },
+    { word: "MITOS", topic: "sastra", diff: "sedang", clue: "Cerita rakyat tradisional tentang dewa atau pahlawan zaman purba." },
+    { word: "BABAD", topic: "sastra", diff: "sulit", clue: "Kisah sejarah tradisional dalam sastra Jawa yang bercampur dengan legenda." },
+    { word: "DIKSI", topic: "sastra", diff: "sulit", clue: "Pilihan kata yang tepat dan selaras untuk mengungkapkan gagasan penulis." },
+    { word: "ELEGI", topic: "sastra", diff: "sulit", clue: "Syair atau nyanyian sastra yang mengandung ratapan dukacita dan kerinduan." },
+    { word: "ARKAIS", topic: "sastra", diff: "sulit", clue: "" },
+    { word: "SANAD", topic: "sastra", diff: "sulit", clue: "Sandaran atau rentetan perawi yang menyampaikan sebuah riwayat teks." },
+    { word: "EPIK", topic: "sastra", diff: "sulit", clue: "" },
+    { word: "SATIR", topic: "sastra", diff: "sulit", clue: "Gaya bahasa sindiran tajam atau kecaman terhadap suatu keadaan." }
+]
+.map(item => ({ ...item, word: item.word.trim().toUpperCase() }))
+.filter(item => item.word.length === 5 && /^[A-Z]{5}$/.test(item.word));
+
+
+// =========================================================================
+// 2. BANK SOAL HANGMAN KREATIF (6-15 HURUF, ISTILAH UNIK & FRASA MULTI-KATA)
+// =========================================================================
+const HANGMAN_BANK = [
+    // --- KULINER NUSANTARA ---
+    { word: "MIE GORENG", topic: "kuliner", diff: "mudah", clue: "Hidangan mi yang ditumis dengan bumbu bawang, kecap manis, dan sayuran." },
+    { word: "NASI UDUK", topic: "kuliner", diff: "mudah", clue: "Nasi gurih yang diaron dan dikukus dengan santan kelapa serta rempah." },
+    { word: "SATE PADANG", topic: "kuliner", diff: "mudah", clue: "Sate daging khas Sumatera Barat dengan kuah kental kuning pedas." },
+    { word: "MARTABAK MANIS", topic: "kuliner", diff: "mudah", clue: "Kue tebal berpori yang diberi taburan cokelat, keju, dan kacang (Terang Bulan)." },
+    { word: "RENDANG DAGING", topic: "kuliner", diff: "sedang", clue: "Masakan daging bercita rasa rempah pedas dari Minangkabau yang dimasak berjam-jam." },
+    { word: "PEMPEK PALEMBANG", topic: "kuliner", diff: "sedang", clue: "Olahan ikan dan sagu khas Sumatera Selatan yang disajikan dengan kuah cuko." },
+    { word: "KERAK TELOR", topic: "kuliner", diff: "sedang", clue: "Kuliner khas Betawi dari beras ketan putih, telur bebek, dan serundeng." },
+    { word: "COTO MAKASSAR", topic: "kuliner", diff: "sedang", clue: "Hidangan sup daging dan jeroan sapi berkuah kacang rempah khas Sulawesi Selatan." },
+    { word: "AYAM BETUTU", topic: "kuliner", diff: "sulit", clue: "Masakan ayam utuh yang dipenuhi bumbu base genep pedas khas Pulau Dewata." },
+    { word: "PAPEDA KUAH KUNING", topic: "kuliner", diff: "sulit", clue: "Bubur sagu lengket khas Maluku dan Papua yang disantap bersama ikan tongkol." },
+    { word: "GULAI TAMBUSU", topic: "kuliner", diff: "sulit", clue: "Kuliner khas Minang berupa usus sapi yang diisi adonan telur dan tahu berbumbu." },
+    { word: "TINUTUAN MANADO", topic: "kuliner", diff: "sulit", clue: "Bubur sehat khas Sulawesi Utara yang dicampur aneka sayuran hijau dan labu kuning." },
+
+    // --- ALAM & GEOGRAFI ---
+    { word: "PELANGI INDAH", topic: "alam", diff: "mudah", clue: "Lengkungan spektrum warna di langit yang muncul akibat pembiasan sinar matahari oleh hujan." },
+    { word: "AIR TERJUN", topic: "alam", diff: "mudah", clue: "Aliran sungai yang jatuh dari tebing batu yang tinggi." },
+    { word: "GUNUNG BERAPI", topic: "alam", diff: "mudah", clue: "Gunung yang memiliki kawah aktif dan dapat mengeluarkan magma dari perut bumi." },
+    { word: "KHATULISTIWA", topic: "alam", diff: "sedang", clue: "Garis khayal keliling bumi yang membagi bumi menjadi belahan utara dan selatan." },
+    { word: "TERUMBU KARANG", topic: "alam", diff: "sedang", clue: "Ekosistem bawah laut tropis yang dibangun oleh biota laut penghasil kapur." },
+    { word: "DANAU TOBA", topic: "alam", diff: "sedang", clue: "Danau vulkanik raksasa di Sumatera Utara yang memiliki Pulau Samosir di tengahnya." },
+    { word: "SAMUDRA HINDIA", topic: "alam", diff: "sedang", clue: "Bentangan lautan luas yang berbatasan langsung di sebelah selatan Pulau Jawa." },
+    { word: "PUNCAK JAYAWIJAYA", topic: "alam", diff: "sulit", clue: "Pegunungan tertinggi di Indonesia yang puncaknya diselimuti salju abadi di Papua." },
+    { word: "LEMPENG TEKTONIK", topic: "alam", diff: "sulit", clue: "Lapisan kerak bumi raksasa yang bergerak lambat dan memicu terjadinya gempa bumi." },
+    { word: "CINCIN API PASIFIK", topic: "alam", diff: "sulit", clue: "Jalur rangkaian gunung berapi aktif dan situs seismik yang mengelilingi Cekungan Pasifik." },
+    { word: "STALAKTIT GUA", topic: "alam", diff: "sulit", clue: "Batuan kapur runcing yang menggantung dari langit-langit gua kapur." },
+
+    // --- HEWAN & FLORA ---
+    { word: "KUPU KUPU", topic: "hewan", diff: "mudah", clue: "Serangga bersayap indah warna-warni hasil metamorfosis dari ulat dan kepompong." },
+    { word: "ORANG UTAN", topic: "hewan", diff: "mudah", clue: "Kera besar berbulu cokelat kemerahan asli hutan Kalimantan dan Sumatera." },
+    { word: "KOMODO", topic: "hewan", diff: "mudah", clue: "Kadal purba raksasa pemakan daging endemik Nusa Tenggara Timur." },
+    { word: "CENDRAWASIH", topic: "hewan", diff: "sedang", clue: "Burung berbulu sangat molek dari Papua yang dijuluki sebagai Burung Surga." },
+    { word: "BUNGA BANGKAI", topic: "hewan", diff: "sedang", clue: "Flora raksasa di hutan Sumatera yang mengeluarkan aroma busuk saat mekar." },
+    { word: "HARIMAU SUMATERA", topic: "hewan", diff: "sedang", clue: "Subspesies kucing besar belang terakhir yang masih bertahan hidup di Indonesia." },
+    { word: "BURUNG RANGKONG", topic: "hewan", diff: "sulit", clue: "Burung besar berparuh besar melengkung dengan tanduk di atas kepalanya (Enggang)." },
+    { word: "PESUT MAHAKAM", topic: "hewan", diff: "sulit", clue: "Mamalia air tawar langka mirip lumba-lumba yang hidup di sungai Kalimantan Timur." },
+    { word: "KANTONG SEMAR", topic: "hewan", diff: "sulit", clue: "Tumbuhan karnivora tropis yang memiliki organ jebakan serangga berbentuk piala." },
+    { word: "BABIRUSA", topic: "hewan", diff: "sulit", clue: "Satwa liar endemik Sulawesi yang memiliki taring panjang mencuat menembus moncongnya." },
+
+    // --- BUDAYA & DAERAH ---
+    { word: "WAYANG KULIT", topic: "budaya", diff: "mudah", clue: "Seni pertunjukan bayangan boneka kulit yang dimainkan oleh seorang Dalang." },
+    { word: "ANGKLUNG BAMBU", topic: "budaya", diff: "mudah", clue: "Alat musik tradisional Jawa Barat dari tabung bambu yang dibunyikan dengan digoyangkan." },
+    { word: "PENCAK SILAT", topic: "budaya", diff: "mudah", clue: "Warisan seni bela diri tradisional asli masyarakat kepulauan Nusantara." },
+    { word: "CANDI BOROBUDUR", topic: "budaya", diff: "sedang", clue: "Monumen candi Buddha terbesar di dunia yang terletak di Magelang, Jawa Tengah." },
+    { word: "RUMAH GADANG", topic: "budaya", diff: "sedang", clue: "Rumah adat tradisional Minangkabau yang atapnya runcing menyerupai tanduk kerbau." },
+    { word: "REOG PONOROGO", topic: "budaya", diff: "sedang", clue: "Kesenian tari tradisional dengan topeng kepala singa raksasa berhias bulu merak." },
+    { word: "LOMPAT BATU NIAS", topic: "budaya", diff: "sulit", clue: "Tradisi ketangkasan pemuda melompati tumpukan batu tinggi di Sumatera Utara (Fahombo)." },
+    { word: "KARAPAN SAPI", topic: "budaya", diff: "sedang", clue: "Perlombaan pacuan sepasang sapi tradisional yang sangat populer di Pulau Madura." },
+    { word: "SASANDO ROTE", topic: "budaya", diff: "sulit", clue: "Alat musik petik berdawai khas Nusa Tenggara Timur yang dikelilingi daun lontar." },
+    { word: "GAMELAN JAWA", topic: "budaya", diff: "mudah", clue: "Ansambel musik tradisional yang terdiri atas gong, kenong, saron, dan gendang." },
+
+    // --- SAINS & TEKNOLOGI ---
+    { word: "TATA SURYA", topic: "sains", diff: "mudah", clue: "Kumpulan benda langit yang terdiri atas Matahari dan semua planet yang mengelilinginya." },
+    { word: "JARINGAN INTERNET", topic: "sains", diff: "mudah", clue: "Sistem komunikasi global yang menghubungkan miliaran komputer dan gawai di seluruh dunia." },
+    { word: "FOTOSINTESIS", topic: "sains", diff: "sedang", clue: "Proses tumbuhan hijau mengubah energi cahaya matahari menjadi zat makanan." },
+    { word: "GRAVITASI BUMI", topic: "sains", diff: "sedang", clue: "Gaya tarik-menarik alami yang membuat semua benda jatuh ke permukaan tanah." },
+    { word: "KECERDASAN BUATAN", topic: "sains", diff: "sedang", clue: "Teknologi simulasi kecerdasan manusia pada mesin komputer (Artificial Intelligence)." },
+    { word: "SATELIT PALAPA", topic: "sains", diff: "sulit", clue: "Nama satelit komunikasi domestik pertama milik Indonesia yang diluncurkan tahun 1976." },
+    { word: "METAMORFOSIS", topic: "sains", diff: "sedang", clue: "Perubahan bentuk biologis secara bertahap pada hewan dari larva hingga dewasa." },
+    { word: "LUBANG HITAM", topic: "sains", diff: "sulit", clue: "Kawasan ruang-waktu di alam semesta dengan gravitasi sangat ekstrem hingga cahaya tak bisa lepas." },
+    { word: "SPEKTRUM ELEKTROMAGNETIK", topic: "sains", diff: "sulit", clue: "Rentang seluruh radiasi gelombang dari sinar gamma hingga gelombang radio." },
+    { word: "BIOTEKNOLOGI", topic: "sains", diff: "sulit", clue: "Cabang ilmu yang memanfaatkan makhluk hidup atau mikroorganisme untuk menghasilkan produk." },
+
+    // --- SASTRA & KIASAN (UNGKAPAN NUSANTARA) ---
+    { word: "BUAH TANGAN", topic: "sastra", diff: "mudah", clue: "Ungkapan kiasan untuk barang yang dibawa dari bepergian (oleh-oleh)." },
+    { word: "BANTING TULANG", topic: "sastra", diff: "mudah", clue: "Ungkapan kiasan yang berarti bekerja sangat keras demi mencari nafkah." },
+    { word: "KAMBING HITAM", topic: "sastra", diff: "sedang", clue: "Ungkapan bagi seseorang yang dipersalahkan atas kesalahan yang tidak dilakukannya." },
+    { word: "RINGAN TANGAN", topic: "sastra", diff: "sedang", clue: "Ungkapan kiasan untuk orang yang gemar menolong dan cepat membantu sesama." },
+    { word: "DARAH BIRU", topic: "sastra", diff: "sedang", clue: "Ungkapan kiasan untuk orang yang berasal dari keluarga keturunan bangsawan." },
+    { word: "GULUNG TIKAR", topic: "sastra", diff: "sedang", clue: "Ungkapan kiasan bagi perusahaan atau pedagang yang mengalami kebangkrutan." },
+    { word: "BAGAI AIR DI DAUN TALAS", topic: "sastra", diff: "sulit", clue: "Peribahasa untuk melukiskan seseorang yang tidak punya pendirian tetap." },
+    { word: "HABIS MANIS SEPAH DIBUANG", topic: "sastra", diff: "sulit", clue: "Peribahasa tentang sikap melupakan seseorang setelah tidak lagi dibutuhkan." },
+    { word: "SUMPAH PEMUDA", topic: "sastra", diff: "mudah", clue: "Ikrar bersejarah tanggal 28 Oktober 1928 yang menegaskan satu bahasa: Bahasa Indonesia." },
+    { word: "LASKAR PELANGI", topic: "sastra", diff: "sedang", clue: "Judul novel terkenal karya Andrea Hirata yang berlatar perjuangan anak-anak di Belitung." },
+    { word: "BUMI MANUSIA", topic: "sastra", diff: "sulit", clue: "Mahakarya sastra roman sejarah karya sastrawan besar Pramoedya Ananta Toer." }
 ];
 
-const EXTRA_WORDS = [
-    "ABADI","ABANG","ABJAD","ABSEN","ACARA","AGAMA","AGUNG","AJAIB","AJANG","AKHIR",
-    "AKRAB","AKTIF","AKTOR","ALAMI","ALANG","ALBUM","ALIBI","ALTAR","AMBIL","AMPAS",
-    "AMPUH","AMPUN","ANCAM","ANDAI","ANDAL","ANEKA","ANGKA","ANGSA","ANJUR","ANTAR",
-    "ANTEK","ANTIK","ANTRE","APUNG","ARENA","AROMA","ARSIP","ARTIS","ASMAR","ASPAL",
-    "ATLET","AUDIO","AWET","BABAK","BABAT","BADAK","BADAN","BADUT","BAGAI","BAGAN",
-    "BAGUS","BAHAN","BAHAS","BAJING","BAKAL","BAKAR","BAKAT","BAKMI","BAKSO","BAKTI",
-    "BAKUL","BALAI","BALAP","BALAS","BALIK","BALOK","BALON","BALUT","BAMBU","BANCI",
-    "BANDA","BANTU","BAPAK","BARAT","BARET","BARIS","BASAH","BASMI","BATAK","BATAL",
-    "BATAS","BATIK","BATIN","BATOK","BATUK","BAWAH","BAYAM","BAYAR","BAZAR","BEBAL",
-    "BEBAN","BEBAS","BEBEK","BECEK","BECAK","BEDAH","BEDAK","BEDIL","BEDUK","BEGAL",
-    "BEJAT","BEKAL","BEKAS","BELAH","BELAI","BELAS","BELIA","BELIT","BELOK","BELUM",
-    "BELUT","BENAH","BENAK","BENAM","BENAR","BENCI","BENDA","BENIH","BENTU","BENUA",
-    "BERAK","BERAT","BERES","BERKA","BESAR","BESOK","BESUK","BETAH","BETIS","BETON",
-    "BETUL","BIARA","BIASA","BIAYA","BIBIR","BIBIT","BIDAK","BIDAN","BIDIK","BIJAK",
-    "BIJIH","BIKIN","BIKSU","BILAH","BILAS","BILIK","BINAR","BINTI","BIOLA","BISIK",
-    "BISUL","BOBOK","BOBOL","BOBOT","BOCAH","BOCOR","BODOH","BOKON","BOLEH","BOLOS",
-    "BONUS","BOROS","BOSAN","BOTAK","BOTOL","BUAYA","BUBAR","BUBUK","BUBUR","BUDAK",
-    "BUGAR","BUGIL","BUJUK","BUJUR","BUKAN","BUKIT","BUKTI","BULAN","BULAT","BULIR",
-    "BULUH","BUMBU","BUNGA","BUNUH","BUNYI","BURAM","BURSA","BURUH","BURUK","BUSA",
-    "BUSUK","BUSUR","BUTIR","BUTUH","BUYAR","BUYUT","CABAI","CABIK","CABUL","CABUT",
-    "CACAT","CADAR","CADAS","CAGAR","CAKAP","CAKAR","CAKRA","CAKUP","CALON","CAMAT",
-    "CANDI","CANDU","CAPAI","CAPEK","CARIK","CARUT","CATAT","CATUR","CATUT","CAWAN",
-    "CEBOK","CEBUR","CECAK","CECAR","CEGAH","CEGAT","CEKIK","CELAH","CELUP","CEMAR",
-    "CEMAS","CEPAT","CEPER","CERAH","CERAI","CERIA","CERNA","CETAK","CETEK","CETUS",
-    "CICIL","CICIT","CIDUK","CIKAL","CIKGU","CILIK","CINTA","CIPTA","CITRA","COBEK",
-    "COCOK","COKOT","COLEK","COLOK","COMOT","COPET","COPOT","CORAK","CORET","CUACA",
-    "CUBIT","CUCUK","CUCUR","CUKAI","CUKUP","CUKUR","CULAS","CULIK","CURAH","CURAM",
-    "CURIG","DADAK","DADAR","DAERA","DAGAN","DAHAN","DAKWA","DALAM","DALIH","DALIL",
-    "DAMAI","DAMAR","DANAU","DANSA","DAPAT","DAPUR","DARAH","DARAT","DARMA","DASAR",
-    "DATANG","DATAR","DATUK","DAWAI","DAYAK","DEBAR","DEBAT","DEBUR","DECAP","DEDAK",
-    "DEKAM","DEKAN","DEKAP","DEKAT","DEKIL","DEMAM","DEMIT","DENAH","DENDA","DEPAN",
-    "DEPAK","DERAI","DERAS","DERET","DERMA","DESAH","DESAK","DESAS","DESAU","DETAK",
-    "DETIK","DEWAN","DIDIH","DIDIK","DIKTE","DINAS","DINI","DOBEL","DODOL","DOGMA",
-    "DOLAR","DOMBA","DONOR","DOSEN","DOSIS","DOYAN","DRAMA","DUBUR","DUDUK","DUKUN",
-    "DUNIA","DURJA","DUSTA","DUSUN","EDISI","EGOIS","EKSTRA","ELANG","EMAIL","EMBAH",
-    "EMBAN","EMBER","EMBUN","EMOSI","EMPAT","EMPUK","ENDAP","ENDUS","ENYAH","ETIKA",
-    "ETNIS","FAJAR","FAKTA","FAKIR","FAMIL","FARDU","FASIH","FATAL","FATWA","FAUNA",
-    "FIKIH","FIKSI","FINAL","FISIK","FITRA","FLORA","FOKUS","FONEM","FORMA","FORUM",
-    "FOSIL","FRAKS","FRASA","FUNGS","GABAH","GABUS","GADAI","GADIS","GADUH","GAGAH",
-    "GAGAK","GAGAL","GAGAP","GAGAS","GAJAH","GAJIH","GALAK","GALAU","GALON","GAMBI",
-    "GANAS","GANDA","GANJA","GANTI","GAPAI","GARAM","GARIS","GARPU","GARUK","GARUT",
-    "GASAK","GASAL","GATAL","GAWAI","GAWAT","GAYUN","GEBUK","GEGAR","GEGER","GELAK",
-    "GELAP","GELAR","GELAS","GELUT","GEMAR","GEMAS","GEMPA","GEMUK","GENAP","GENTA",
-    "GERAH","GERAI","GERAK","GERAM","GERET","GESEK","GESER","GESIT","GETAH","GETAR",
-    "GETIR","GETOL","GIGIH","GIGIL","GIGIT","GILAS","GILIR","GITAR","GODA","GODOK",
-    "GOLEK","GOLOK","GORES","GOSIP","GOSOK","GOYAH","GRUP","GUBAH","GUBUK","GUDAN",
-    "GUDEG","GUGAT","GUGUP","GUGUR","GUGUS","GULAI","GULAT","GULMA","GUMAM","GUMUL",
-    "GUNDI","GURAU","GURIH","GURUN","GURUH","GUSAR","GUSUR","GUYON","GUYUR","HABIS",
-    "HADAP","HADIR","HADIS","HAFAL","HAJAT","HAJAR","HAKIM","HALAL","HALAU","HALTE",
-    "HALUS","HAMBA","HAMIL","HAMPA","HANTU","HANYA","HAPUS","HARAM","HARAP","HARGA",
-    "HARTA","HARUM","HARUS","HASIL","HASUT","HAWAT","HAYAT","HEBAT","HEBOH","HELAI",
-    "HEMAT","HENTI","HERAN","HEWAN","HIBAH","HIBUR","HIDUP","HIJAU","HILIR","HINA",
-    "HIRAU","HIRUK","HIRUP","HISAP","HITAM","HORMA","HOTEL","HUJAT","HUJAN","HUKUM",
-    "HUMOR","HUNUS","HURUF","HUTAN","IBADA","IBLIS","IDEAL","IDOLA","IJAZA","IKLAN",
-    "IKLIM","IKRAR","ILAHI","ILHAM","ILUSI","IMBAL","IMBAS","IMBAU","IMPAS","IMPOR",
-    "INCAR","INDAH","INDUK","INFUS","INGAT","INGIN","INGUS","INJAK","INJIL","INSAN",
-    "INSAF","INTAI","INTAN","INTIP","IRAMA","IRING","ISENG","ISLAM","ISTRI","ITIKA",
-    "JABAT","JABAR","JADWA","JAGAD","JAGAL","JAHAT","JAHIL","JAHIT","JAJAK","JAJAL",
-    "JAJAN","JAJAR","JAKET","JAKSA","JAKUN","JALAK","JALAN","JALAR","JALIN","JALUR",
-    "JAMAH","JAMAK","JAMAN","JAMBU","JAMIN","JAMPI","JAMUR","JANDA","JANJI","JANUR",
-    "JARAK","JARAH","JARUM","JASAD","JATAH","JATUH","JAWAB","JEBAK","JEBOL","JEJAK",
-    "JEJAL","JEJER","JELAS","JELEK","JELMA","JEMUR","JENIS","JENUH","JEPIT","JERAT",
-    "JERIH","JERUK","JILAT","JILID","JIMAT","JINAK","JIPLA","JODOH","JOGET","JOMPO",
-    "JOROK","JUANG","JUARA","JUBAH","JUBEL","JUDUL","JUJUR","JUMAT","JUMBO","JUMPA",
-    "JURU","JURUS","KABAR","KABEL","KABIN","KABUL","KABUR","KABUT","KACAU","KADAL",
-    "KADAR","KADER","KAFAN","KAFIR","KAGET","KAGUM","KAIDA","KAJIA","KAKAK","KAKAO",
-    "KAKAP","KAKEK","KALAH","KALAP","KALAU","KALDU","KALUT","KAMAR","KAMIS","KAMUS",
-    "KANAL","KANAN","KANDA","KAPAK","KAPAL","KAPAN","KAPAS","KAPOK","KAPUR","KARAM",
-    "KARAT","KARET","KARGO","KARIB","KARIR","KARMA","KARTU","KARYA","KASAR","KASIH",
-    "KASIR","KASTA","KASUS","KASUR","KATAK","KATEL","KATIL","KATUP","KAWAL","KAWAN",
-    "KAWAT","KAWIN","KAYAK","KAYUH","KEBAL","KEBON","KEBUN","KEBUT","KECAM","KECAP",
-    "KECIL","KECOH","KECUP","KECUT","KEDAI","KEDAP","KEDIP","KEDOK","KEDUK","KEJAM",
-    "KEJAR","KEJUT","KEKAL","KEKEH","KEKER","KELAH","KELAK","KELAM","KELAR","KELAS",
-    "KELIP","KELIT","KELOK","KELON","KELOR","KELUH","KEMAH","KEMAS","KEMPU","KENAL",
-    "KENAN","KENDI","KENYA","KEPAL","KEPIT","KERAH","KERAK","KERAM","KERAN","KERAP",
-    "KERAS","KERAT","KEREK","KEREN","KERIS","KERJA","KEROK","KERUH","KERUK","KERUT",
-    "KESAL","KESAN","KESAT","KESET","KETAM","KETAN","KETAT","KETEK","KETEL","KETIK",
-    "KETIP","KETOK","KETUA","KETUK","KETUL","KIAMA","KIBAR","KIBUL","KICAU","KIDAL",
-    "KIKIR","KIKIS","KILAH","KILAP","KILAS","KILAT","KILAU","KIMIA","KIOS","KIPAS",
-    "KIPER","KIRAB","KIRIM","KISAH","KISAR","KISUT","KITAB","KITAR","KLAIM","KLIEN",
-    "KLINI","KOBAR","KOBOI","KOCAK","KOCOK","KODOK","KODRA","KOKOH","KOKOK","KOLAK",
-    "KOLAM","KOLOM","KOLOT","KOMEN","KOMET","KOMIK","KOMPA","KONDE","KOPER","KOPIA",
-    "KORAN","KOREK","KOTAK","KOTOR","KOYAK","KREAS","KRIM","KUACI","KUALA","KUALI",
-    "KUASA","KUBAH","KUBIK","KUBIS","KUBUR","KUCUR","KUDAP","KUDIS","KUDUS","KUJANG",
-    "KUKUH","KUKUS","KULAH","KULAK","KULIT","KULUM","KUMAL","KUMAN","KUMAT","KUMIS",
-    "KUMUR","KUNCI","KUNDUR","KUNO","KUPAS","KUPON","KURAP","KURAS","KURIR","KURMA",
-    "KURSI","KURUS","KURVA","KUSAM","KUSIR","KUSTA","KUSUT","KUTIK","KUTIL","KUTIP",
-    "KUTUB","KUTUK","KUYUP","KWACI","LABEL","LABIL","LABOR","LABUH","LACAK","LADEN",
-    "LAFAL","LAGAK","LAHAN","LAHAP","LAHAR","LAHIR","LAJANG","LAJUR","LAKON","LALAI",
-    "LALAP","LALAT","LALIM","LAMAR","LAMPU","LANDA","LANGI","LANTA","LAPAK","LAPAN",
-    "LAPAR","LAPIS","LAPOR","LAPUK","LARAS","LARIS","LARON","LARUT","LASO","LATAH",
-    "LATAR","LATIH","LAWAN","LAWAK","LAYAK","LAYAN","LAYAR","LAZIM","LEBAH","LEBAI",
-    "LEBAK","LEBAR","LEBAT","LEBIH","LEBUR","LECEH","LECET","LEDAK","LEDEK","LEGAL",
-    "LEGAM","LEGIT","LEHER","LEKAS","LEKAT","LEKUK","LELAH","LELAP","LELEH","LEMAH",
-    "LEMAK","LEMAS","LEMBUT","LENDA","LENSA","LEPAS","LERAI","LESAT","LESBI","LETAK",
-    "LETIH","LETUS","LEVEL","LEWAT","LEZAT","LIANG","LIBAS","LIBAT","LIBUR","LICIK",
-    "LICIN","LIDAH","LIHAI","LIHAT","LILIN","LILIT","LIMPA","LIPAN","LIPAT","LIPUR",
-    "LIPUT","LIRIH","LIRIK","LISAN","LITER","LOBAK","LOGAM","LOGAT","LOGIS","LOKAL",
-    "LOKET","LOMBA","LONTE","LOSME","LOTRE","LOYAL","LUANG","LUBAN","LUBER","LUDAH",
-    "LUDES","LUHUR","LUKIS","LULUH","LULUR","LULUS","LUMAT","LUMER","LUMUR","LUMUT",
-    "LUNAK","LUNAS","LUPUT","LURAH","LURIK","LURUH","LURUS","LUSIN","LUSUH","LUTUT",
-    "LUWES","MABUK","MACAM","MACAN","MACET","MADAT","MAFIA","MAGIS","MAHAL","MAHIR",
-    "MAJIK","MAKAM","MAKAN","MAKAR","MAKIN","MAKNA","MALAH","MALAM","MALAS","MAMPIR",
-    "MAMPU","MANDI","MANIS","MANJA","MAPAN","MARAH","MARAK","MARET","MARGA","MASA",
-    "MASAK","MASAM","MASIH","MASIN","MASUK","MATAN","MATRA","MAUNG","MAWAR","MAWAS",
-    "MAYAT","MAYOR","MEBEL","MEDAN","MEDIA","MEDIS","MEGAH","MEKAR","MELAR","MELEK",
-    "MELON","MEMAR","MENIT","MENOR","MENUR","MERAH","MERAK","MERDU","MEREK","MEREM",
-    "MESIN","MESKI","MESRA","MESTI","MESUM","METAL","METER","MEWAH","MIKRO","MILIK",
-    "MIMIK","MIMIS","MIMPI","MINAT","MINIM","MINTA","MINUM","MIRIP","MIRIS","MISAL",
-    "MISKI","MITOS","MITRA","MOBIL","MODAL","MODEL","MODIF","MODUS","MOGOK","MOHON",
-    "MOJOK","MOLEK","MOMEN","MOMOK","MORAL","MOTIF","MOTOR","MUARA","MUDAH","MUDIK",
-    "MUFTI","MUJUR","MUKIM","MULAI","MULAS","MULIA","MULSA","MULUK","MULUS","MULUT",
-    "MUMET","MUNCUL","MURAH","MURAI","MURAM","MURID","MURKA","MURNI","MURUNG","MUSIM",
-    "MUSUH","MUTU","NAFSU","NAHAS","NAJIS","NAKAL","NAKSIR","NALAR","NAMUN","NANAH",
-    "NANAR","NANAS","NANTI","NAPAS","NASIB","NAZAR","NEKAT","NENEK","NETRA","NGERI",
-    "NGILU","NIAGA","NIKAH","NIKMA","NILAI","NILON","NIPIS","NOMAD","NOMOR","NORMA",
-    "NOVEL","NUKLI","NURI","NYALA","NYAMA","NYANYI","NYARI","NYATA","NYAWA","NYERI",
-    "NYIUR","OBENG","OBJEK","OBRAL","OBROL","OCEH","OKNUM","OLENG","OMBAK","OMPONG",
-    "OMSET","OMZET","ONCOM","ONGKO","OPERA","OPINI","OPTIM","ORANG","ORASI","ORBIT",
-    "ORDER","ORGAN","ORKES","PACAR","PACUL","PADAM","PADAN","PADAT","PAGAR","PAGUT",
-    "PAHAM","PAHAT","PAHIT","PAJAK","PAJAN","PAKAI","PAKAN","PAKAR","PAKET","PAKIS",
-    "PAKSA","PAKTA","PALEM","PALSU","PALUN","PAMAN","PAMER","PAMIT","PAMRI","PANAH",
-    "PANAS","PANCI","PANDA","PANDU","PANEL","PANEN","PANIK","PANJI","PANTA","PANTI",
-    "PANTU","PAPAH","PAPAN","PAPAR","PARAF","PARAH","PARAS","PARAU","PARIT","PARUH",
-    "PARUT","PASAK","PASAL","PASAR","PASCA","PASIF","PASIR","PASKA","PASOK","PASRA",
-    "PASTA","PASTI","PASUN","PATAH","PATEN","PATOK","PATUH","PATUT","PAWAN","PAYAH",
-    "PAYAU","PECAH","PECAT","PECEL","PECUT","PEDAL","PEDAS","PEDES","PEDIH","PEGAL",
-    "PEGAS","PEJAM","PEKAK","PEKAN","PEKAT","PEKIK","PELAK","PELAN","PELIK","PELIT",
-    "PELUK","PENAT","PENUH","PENYU","PEPAT","PERAH","PERAK","PERAM","PERAN","PERAS",
-    "PERGI","PERIA","PERIH","PERLU","PERON","PESAN","PESAT","PESEK","PESIA","PESTA",
-    "PETAK","PETIR","PETIS","PEYEK","PIALA","PIANO","PIATU","PICIK","PIDAT","PIJAK",
-    "PIJAR","PIJAT","PIKAT","PIKIR","PIKUL","PIKUN","PILAH","PILAR","PILEK","PILIH",
-    "PILOT","PILU","PINDA","PINTA","PINTU","PIPIH","PIPIS","PIPIT","PISAH","PISAU",
-    "PITAM","PLAKA","POHON","POJOK","POKOK","POLAH","POLES","POLOS","POMPA","PONI",
-    "POROS","PORSI","POSE","POTON","PRABU","PREMI","PRIMA","PUASA","PUCAT","PUCUK",
-    "PUDAR","PUJA","PUJUK","PUKAT","PUKAU","PUKUL","PULAS","PULAU","PULEN","PULIH",
-    "PULSA","PULUH","PUNAH","PUNDA","PUNYA","PUPUK","PUPUR","PUPUS","PURBA","PUSAR",
-    "PUSAT","PUSPA","PUTAR","PUTIH","PUTIK","PUTRA","PUTRI","PUTUS","PUYUH","RABUK",
-    "RABUN","RACIK","RACUN","RADAR","RADIO","RAGAM","RAHIM","RAJAH","RAJAM","RAJIN",
-    "RAJUK","RAJUT","RAKIT","RALAT","RAMAH","RAMAI","RAMAL","RAMBU","RAMU","RANAH",
-    "RANCU","RANDA","RANDU","RANUM","RAPAT","RAPIH","RAPOR","RAPUH","RASUK","RASUL",
-    "RATAP","RATUS","RAUNG","RAWAN","RAWAT","RAWIT","RAWON","RAYAP","RAZIA","REBAH",
-    "REBUS","REBUT","RECEH","RECIK","REDAM","REDUP","REGUK","REHAT","REKAM","REKAN",
-    "REKAP","REKAT","REKOR","RELA","REMAJ","REMAS","REMEH","REMIS","REMUK","RENDA",
-    "REOT","REPAK","REPAS","REPET","REPOT","RESAH","RESAP","RESEP","RESMI","RETAK",
-    "RETAS","REUNI","REWEL","RIANG","RIBUT","RICUH","RIDHO","RIMBA","RINAI","RINCI",
-    "RINDU","RISAU","RITME","ROBAH","ROBEK","ROBOH","ROBOT","ROGOH","ROKET","ROKOK",
-    "ROMAN","ROMPI","RONDA","RONDE","ROTAN","ROYAL","RUANG","RUBAH","RUBUH","RUJAK",
-    "RUJUK","RUKUN","RUMAH","RUMIT","RUMOR","RUMUS","RUPA","RUSAK","RUSUH","RUSUK",
-    "RUTIN","RUWET","SABAN","SABAR","SABDA","SABIT","SABOT","SABTU","SABUK","SABUN",
-    "SABUT","SADAP","SADAR","SADIS","SAHAM","SAHUT","SAING","SAINS","SAJAK","SAKIT",
-    "SAKSI","SAKTI","SALAH","SALAK","SALAM","SALAT","SALDO","SALEH","SALIB","SALIN",
-    "SALJU","SALON","SALUR","SALUT","SAMAR","SAMPA","SANDI","SANGA","SANTA","SAPA",
-    "SAPUT","SARAF","SARAN","SARAP","SARAT","SARIN","SASAR","SATWA","SAWAH","SAWIT",
-    "SAYAP","SAYAT","SAYUP","SAYUR","SEBAB","SEBAK","SEBAL","SEBAR","SEBAT","SEBUT",
-    "SEDAN","SEDAP","SEDIA","SEDIH","SEDOT","SEDUH","SEGAN","SEGAR","SEGEL","SEGI",
-    "SEHAT","SEJAK","SEJAT","SEJUK","SEKAR","SEKAT","SEKTE","SELAI","SELAM","SELAT",
-    "SELIH","SELIP","SELOP","SEMAI","SEMAK","SEMAT","SEMEN","SEMUA","SEMUT","SENAM",
-    "SENAR","SENAT","SENDA","SENDI","SENDU","SENGI","SENIN","SENJA","SENYA","SEPAK",
-    "SEPIT","SEPOI","SEPUH","SERAH","SERAK","SERAM","SERAP","SERAT","SERBU","SERET",
-    "SERI","SERTA","SERU","SERUT","SESAK","SESAL","SESAT","SETAN","SETIA","SETIR",
-    "SETOR","SEWOT","SIAGA","SIANG","SIAPA","SIBUK","SIDIK","SIFAT","SIGAP","SIHIR",
-    "SIKAP","SIKAT","SIKIL","SIKSA","SIKUT","SILAH","SILAM","SILAP","SILAT","SILAU",
-    "SILET","SILIH","SIMAK","SINAR","SINGA","SINIS","SIPIL","SIPIR","SIPIT","SIPUT",
-    "SIRAM","SIRAP","SIRAT","SIRIK","SIRIP","SIRNA","SIROP","SIRUP","SISIH","SISIK",
-    "SISIP","SISIR","SISWA","SISWI","SIUNG","SKALA","SKOR","SLOGA","SOBEK","SOBAT",
-    "SODOK","SODOR","SOGOK","SOHOR","SOLEH","SOLID","SOPAN","SOPIR","SORAK","SOROT",
-    "SOSIS","SOSOK","SOWAN","SPASI","SPION","SPONS","SPREI","STAF","STASI","STATU",
-    "STERI","STOK","STRES","STRUK","SUAKA","SUAMI","SUARA","SUASA","SUATU","SUBUH",
-    "SUBUR","SUDAH","SUDUT","SUGIH","SUGUH","SUJUD","SUKAR","SUKMA","SULAM","SULAP",
-    "SULIT","SULUH","SUMBU","SUMUR","SUNAH","SUNAT","SUNDA","SUNYI","SUPEL","SUPER",
-    "SUPIR","SURAM","SURAT","SURAU","SURGA","SURUH","SURUT","SURYA","SUSAH","SUSUL",
-    "SUSUN","SUSUP","SUSUR","SUSUT","SUTRA","SYAIR","SYAWA","TABAH","TABEL","TABIB",
-    "TABIR","TABOK","TABUH","TABUR","TAFSI","TAGIH","TAHAN","TAHAP","TAHUN","TAJAM",
-    "TAJUK","TAJIR","TAKAR","TAKIK","TAKSI","TAKUT","TAKWA","TALAK","TALAM","TALAS",
-    "TAMAK","TAMAN","TAMAT","TAMPA","TAMU","TANAH","TANAK","TANAM","TANDA","TANDU",
-    "TANGA","TANGI","TANPA","TANTE","TANYA","TAPAK","TAPAL","TAPIR","TAPIS","TARAF",
-    "TARIF","TARIK","TARUH","TATAH","TATAK","TATAP","TATAR","TAUGE","TAWAN","TAWAR",
-    "TAWAS","TAWAF","TAWON","TAWUR","TEBAK","TEBAL","TEBAR","TEBAS","TEBU","TEBUS",
-    "TEDUH","TEGAK","TEGAL","TEGAP","TEGAR","TEGAS","TEGUK","TEGUH","TEGUR","TEKAD",
-    "TEKAN","TEKUK","TEKUN","TELAH","TELAK","TELAN","TELAT","TELOK","TELOR","TELUK",
-    "TELUR","TEMAN","TEMPA","TEMPE","TEMPO","TEMU","TENAR","TENDA","TENIS","TENTU",
-    "TENUN","TEORI","TEPAT","TEPIH","TEPIS","TEPOK","TEPUK","TERAI","TERAP","TERAS",
-    "TERIK","TERKA","TEROR","TERPA","TERUS","TESIS","TETAP","TETAS","TETES","TEWAS",
-    "TIADA","TIANG","TIARA","TIDAK","TIDUR","TIKAI","TIKAM","TIKAR","TIKET","TIKUS",
-    "TILIK","TIMAH","TIMBA","TIMPA","TIMUN","TIMUR","TINJA","TINJU","TINTA","TIPIS",
-    "TIRAI","TIRAM","TIRIS","TITAH","TITIK","TITIP","TITIS","TOBAT","TOGEL","TOKOH",
-    "TOKOK","TOKEK","TOLAK","TOLEH","TOLOL","TOMAT","TOMBO","TOPIK","TOPAN","TORAK",
-    "TOREH","TOTAL","TREN","TROFI","TROLI","TUALA","TUANG","TUBUH","TUDUH","TUGAS",
-    "TUHAN","TUJUH","TUKAR","TUKIK","TUKUL","TULAH","TULAR","TULEN","TULIS","TULUS",
-    "TUMAN","TUMIS","TUMIT","TUMOR","TUMPU","TUNAI","TUNAS","TUNDA","TUPAI","TURIS",
-    "TURUN","TURUT","TUSUK","TUTUP","TUTUR","UDANG","UDARA","UJUNG","ULAMA","ULANG",
-    "UMPAN","UMPAT","UMPET","UNDI","UNGSI","UNJUK","UNSUR","UNTAI","UNTUK","UPAYA",
-    "URBAN","URGEN","URINE","URING","URUNG","USANG","USAP","USAHA","UTAMA","UTANG",
-    "UTARA","VAKSI","VALID","VALUT","VAMPI","VENA","VERSI","VIDEO","VIRAL","VIRUS",
-    "VISUA","VITAL","VOKAL","VONIS","WABAH","WADAH","WADUK","WAFAT","WAJAH","WAJAN",
-    "WAJAR","WAJIB","WAJIK","WAKAF","WAKIL","WAKTU","WALAU","WALET","WANGI","WARAS",
-    "WARGA","WARIS","WARNA","WASIT","WATAK","WATAS","WAZIR","WELAS","WINDU","WISMA",
-    "WUJUD","WUKUF","YAKIN","YAKNI","YATIM","YURAN","ZABUR","ZAHID","ZAKAR","ZAKAT",
-    "ZALIM","ZAMAN","ZEBRA","ZIRAH","ZUHUR"
+// Kamus tambahan 5 huruf untuk validasi tebakan pemain di Wordle
+const EXTRA_WORDS_5 = [
+    "MAKAN","MINUM","TIDUR","RUMAH","PINTU","KURSI","LAMPU","MOBIL","MOTOR","KAPAL",
+    "KERJA","PASAR","MANIS","PAHIT","PEDAS","PANAS","SEJUK","ANGIN","POHON","BUNGA",
+    "TANAH","PASIR","BULAN","MALAM","SIANG","SENJA","WAKTU","TAHUN","PEKAN","BESOK",
+    "CINTA","RINDU","KASIH","MARAH","SEDIH","TAKUT","SABAR","JUJUR","BENAR","SALAH",
+    "CEPAT","PELAN","DEKAT","BESAR","KECIL","BERAT","TEBAL","TIPIS","DALAM","PENUH",
+    "HABIS","KOTOR","SEHAT","SAKIT","LELAH","SEGAR","HIDUP","JALAN","DUDUK","JATUH",
+    "MASUK","LIHAT","SUARA","TANYA","JAWAB","TULIS","PAPAN","KELAS","MURID","KAWAN",
+    "TEMAN","LAWAN","MUSUH","KAKAK","NENEK","KAKEK","BAPAK","PAMAN","WARGA","ORANG",
+    "GADIS","BOCAH","MULUT","LIDAH","LEHER","PERUT","LUTUT","DARAH","KULIT","WAJAH",
+    "MACAN","TIKUS","LALAT","BEBEK","ANGSA","GAGAK","UDANG","KETAM","KATAK","JERUK",
+    "NANAS","SALAK","MELON","KURMA","JAMBU","TIMUN","TOMAT","CABAI","BAYAM","JAMUR",
+    "BUMBU","PISAU","GARPU","GELAS","BOTOL","EMBER","KASUR","SPREI","PAGAR","KAMAR",
+    "DAPUR","KUNCI","JARUM","SIKAT","SABUN","SISIR","BEDAK","JAKET","SABUK","PERAK",
+    "INTAN","KAWAT","KARET","KAPAS","ARANG","MERAH","PUTIH","HITAM","HIJAU","DAMAI",
+    "BEBAS","HUKUM","PAJAK","HARGA","MURAH","MAHAL","BAYAR","MODAL","BIAYA","KARTU",
+    "SURAT","KABAR","PESAN","MUSIK","IRAMA","LAYAR","GELAP","GEMPA","BADAN","TUBUH",
+    "NAPAS","MIMPI","SADAR","PAHAM","PIKIR","INGAT","YAKIN","HARAP","ABADI","ABANG",
+    "ABJAD","ABSEN","ACARA","AGAMA","AGUNG","AJAIB","AJANG","AKHIR","AKRAB","AKTIF",
+    "AKTOR","ALAMI","ALANG","ALBUM","ALIBI","ALTAR","AMBIL","AMPAS","AMPUH","AMPUN"
 ];
 
-const VALID_WORDS_SET = new Set([
-    ...TARGET_WORDS.map(item => item.word),
-    ...EXTRA_WORDS
+const VALID_WORDLE_SET = new Set([
+    ...WORDLE_BANK.map(item => item.word),
+    ...EXTRA_WORDS_5
 ]);
 
 const PRAISE_MESSAGES = [
-    "Jenius! 🤯",
-    "Luar Biasa! 🔥",
-    "Hebat Sekali! 👏",
-    "Mantap! 👍",
+    "Jenius Luar Biasa! 🤯",
+    "Tajam Sekali! 🔥",
+    "Hebat! Kosakatamu Luas! 👏",
+    "Mantap Betul! 👍",
     "Hampir Saja! 😅",
-    "Fiuh! Selamat! 😮‍💨"
+    "Fiuh! Tepat di Kesempatan Terakhir! 😮‍💨"
 ];
 
 class KataKitaApp {
     constructor() {
-        // State Aplikasi & Multiplayer
+        // State Aplikasi & Konfigurasi
         this.mode = "solo"; // "solo" | "multi"
         this.gameType = "wordle"; // "wordle" | "hangman"
+        this.selectedDifficulty = "sedang"; // "mudah" | "sedang" | "sulit"
+        this.selectedTopic = "acak"; // "acak" | "kuliner" | "alam" | "hewan" | "budaya" | "sains" | "sastra"
+
         this.isHost = false;
         this.roomCode = "";
         this.myName = "Pemain 1";
         this.peerName = "Pemain 2";
 
-        // PeerJS & BroadcastChannel fallback
+        // Koneksi Multiplayer
         this.peer = null;
         this.conn = null;
         this.bc = null;
@@ -336,15 +279,16 @@ class KataKitaApp {
         this.myVote = null;
         this.peerVote = null;
 
-        // Game State (Shared)
+        // State Permainan
         this.secretWord = "MAKAN";
         this.secretClue = "";
+        this.secretTopic = "kuliner";
         this.activeTurn = "host"; // "host" | "guest"
         this.isGameOver = false;
         this.isAnimating = false;
         this.hintUsed = false;
 
-        // Wordle State
+        // State Wordle
         this.maxGuesses = 6;
         this.wordLength = 5;
         this.currentRow = 0;
@@ -352,7 +296,7 @@ class KataKitaApp {
         this.guesses = [];
         this.evaluations = [];
 
-        // Hangman State
+        // State Hangman Kreatif
         this.maxMistakes = 6;
         this.mistakes = 0;
         this.guessedLetters = new Set();
@@ -363,7 +307,7 @@ class KataKitaApp {
     }
 
     // ==========================================
-    // TEMA & NAVIGASI LAYAR
+    // TEMA & LAYAR
     // ==========================================
     initTheme() {
         const saved = localStorage.getItem("katakita_theme") || "dark";
@@ -386,18 +330,16 @@ class KataKitaApp {
 
     showScreen(screenId) {
         ["screen-home", "screen-lobby", "screen-vote", "screen-game"].forEach(id => {
-            const el = document.getElementById(id);
-            if (id === screenId) {
-                el.classList.remove("hidden");
-            } else {
-                el.classList.add("hidden");
-            }
+            document.getElementById(id).classList.toggle("hidden", id !== screenId);
         });
 
         const isHome = screenId === "screen-home";
         const isGame = screenId === "screen-game";
         document.getElementById("btn-home").classList.toggle("hidden", isHome);
-        document.getElementById("btn-hint").classList.toggle("hidden", !isGame);
+
+        // Tombol Hint disembunyikan jika di luar game ATAU jika tingkat kesulitan = SULIT
+        const hideHint = !isGame || this.selectedDifficulty === "sulit";
+        document.getElementById("btn-hint").classList.toggle("hidden", hideHint);
     }
 
     // ==========================================
@@ -417,17 +359,37 @@ class KataKitaApp {
 
         document.getElementById("btn-hint").addEventListener("click", () => this.useHint());
 
+        // Pemilih Tingkat Kesulitan di Home
+        document.querySelectorAll("#home-difficulty-group .diff-pill").forEach(btn => {
+            btn.addEventListener("click", () => {
+                document.querySelectorAll("#home-difficulty-group .diff-pill").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                this.selectedDifficulty = btn.dataset.diff;
+            });
+        });
+
+        // Pemilih Topik di Home
+        document.querySelectorAll("#home-topic-group .topic-chip").forEach(chip => {
+            chip.addEventListener("click", () => {
+                document.querySelectorAll("#home-topic-group .topic-chip").forEach(c => c.classList.remove("active"));
+                chip.classList.add("active");
+                this.selectedTopic = chip.dataset.topic;
+            });
+        });
+
         // Tombol Solo di Home
         document.getElementById("btn-solo-wordle").addEventListener("click", () => {
             this.myName = this.getPlayerNameInput();
             this.mode = "solo";
-            this.startSelectedGame("wordle", this.pickRandomWord(), "host");
+            const item = this.pickQuestion("wordle", this.selectedTopic, this.selectedDifficulty);
+            this.startSelectedGame("wordle", item, "host");
         });
 
         document.getElementById("btn-solo-hangman").addEventListener("click", () => {
             this.myName = this.getPlayerNameInput();
             this.mode = "solo";
-            this.startSelectedGame("hangman", this.pickRandomWord(), "host");
+            const item = this.pickQuestion("hangman", this.selectedTopic, this.selectedDifficulty);
+            this.startSelectedGame("hangman", item, "host");
         });
 
         // Tombol Multiplayer di Home
@@ -460,6 +422,28 @@ class KataKitaApp {
             this.showScreen("screen-home");
         });
 
+        // Sinkronisasi Dropdown Kesulitan & Topik di Layar Vote Multiplayer
+        const voteDiffSelect = document.getElementById("vote-difficulty-select");
+        const voteTopicSelect = document.getElementById("vote-topic-select");
+
+        voteDiffSelect.addEventListener("change", () => {
+            this.selectedDifficulty = voteDiffSelect.value;
+            this.sendNetworkMessage({
+                type: "SYNC_SETTINGS",
+                difficulty: this.selectedDifficulty,
+                topic: this.selectedTopic
+            });
+        });
+
+        voteTopicSelect.addEventListener("change", () => {
+            this.selectedTopic = voteTopicSelect.value;
+            this.sendNetworkMessage({
+                type: "SYNC_SETTINGS",
+                difficulty: this.selectedDifficulty,
+                topic: this.selectedTopic
+            });
+        });
+
         // Voting Actions
         document.getElementById("btn-vote-wordle").addEventListener("click", () => this.castVote("wordle"));
         document.getElementById("btn-vote-hangman").addEventListener("click", () => this.castVote("hangman"));
@@ -467,8 +451,9 @@ class KataKitaApp {
         // Quick Restart / Back to Vote
         document.getElementById("btn-quick-restart").addEventListener("click", () => {
             if (this.mode === "solo") {
-                this.startSelectedGame(this.gameType, this.pickRandomWord(), "host");
-                this.showToast("Kata rahasia baru dimulai! 🎲");
+                const item = this.pickQuestion(this.gameType, this.selectedTopic, this.selectedDifficulty);
+                this.startSelectedGame(this.gameType, item, "host");
+                this.showToast("Soal baru telah dimulai! 🎲");
             } else {
                 this.sendNetworkMessage({ type: "GOTO_VOTE" });
                 this.enterVotingScreen();
@@ -479,25 +464,31 @@ class KataKitaApp {
         document.getElementById("btn-play-again").addEventListener("click", () => {
             this.closeAllModals();
             if (this.mode === "solo") {
-                this.startSelectedGame(this.gameType, this.pickRandomWord(), "host");
+                const item = this.pickQuestion(this.gameType, this.selectedTopic, this.selectedDifficulty);
+                this.startSelectedGame(this.gameType, item, "host");
             } else {
-                // Di mode multiplayer, mulai ulang game yang sama dengan kata baru
-                const wordObj = this.pickRandomWord();
+                const item = this.pickQuestion(this.gameType, this.selectedTopic, this.selectedDifficulty);
                 const firstTurn = Math.random() < 0.5 ? "host" : "guest";
                 this.sendNetworkMessage({
                     type: "START_GAME",
                     gameType: this.gameType,
-                    wordObj,
+                    wordObj: item,
+                    difficulty: this.selectedDifficulty,
+                    topic: this.selectedTopic,
                     firstTurn
                 });
-                this.startSelectedGame(this.gameType, wordObj, firstTurn);
+                this.startSelectedGame(this.gameType, item, firstTurn);
             }
         });
 
         document.getElementById("btn-back-vote").addEventListener("click", () => {
             this.closeAllModals();
-            this.sendNetworkMessage({ type: "GOTO_VOTE" });
-            this.enterVotingScreen();
+            if (this.mode === "multi") {
+                this.sendNetworkMessage({ type: "GOTO_VOTE" });
+                this.enterVotingScreen();
+            } else {
+                this.showScreen("screen-home");
+            }
         });
 
         // Close Modals
@@ -535,13 +526,41 @@ class KataKitaApp {
         return val || "Pemain";
     }
 
-    pickRandomWord() {
-        const idx = Math.floor(Math.random() * TARGET_WORDS.length);
-        return TARGET_WORDS[idx];
+    // ==========================================
+    // PEMILIHAN SOAL CERDAS (TOPIK & KESULITAN)
+    // ==========================================
+    pickQuestion(gameType, topic, difficulty) {
+        const bank = gameType === "wordle" ? WORDLE_BANK : HANGMAN_BANK;
+
+        // Filter 1: Sesuai topik dan sesuai kesulitan
+        let pool = bank.filter(item => {
+            const matchTopic = topic === "acak" || item.topic === topic;
+            const matchDiff = item.diff === difficulty;
+            return matchTopic && matchDiff;
+        });
+
+        // Fallback 1: Jika kombinasi spesifik kosong, ambil sesuai topik saja
+        if (pool.length === 0) {
+            pool = bank.filter(item => topic === "acak" || item.topic === topic);
+        }
+
+        // Fallback 2: Ambil dari seluruh bank
+        if (pool.length === 0) {
+            pool = bank;
+        }
+
+        // Hindari kata yang persis baru saja keluar
+        if (pool.length > 1) {
+            const filtered = pool.filter(item => item.word !== this.secretWord);
+            if (filtered.length > 0) pool = filtered;
+        }
+
+        const idx = Math.floor(Math.random() * pool.length);
+        return pool[idx];
     }
 
     // ==========================================
-    // SISTEM MULTIPLAYER (PeerJS + BroadcastChannel)
+    // MULTIPLAYER (PeerJS + BroadcastChannel)
     // ==========================================
     generateRoomCode() {
         const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -590,7 +609,6 @@ class KataKitaApp {
     setupMultiplayerTransport(code, asHost) {
         this.disconnectMultiplayer();
 
-        // 1. Siapkan BroadcastChannel untuk koneksi instan antar-tab di browser yang sama
         try {
             this.bc = new BroadcastChannel(`katakita_room_${code}`);
             this.bc.onmessage = (ev) => this.handleNetworkMessage(ev.data);
@@ -598,7 +616,6 @@ class KataKitaApp {
             console.warn("BroadcastChannel tidak tersedia:", err);
         }
 
-        // 2. Siapkan PeerJS (WebRTC) untuk koneksi antar perangkat / internet
         if (typeof Peer !== "undefined") {
             const peerId = asHost ? `katakita-id-room-${code}` : undefined;
             try {
@@ -619,14 +636,12 @@ class KataKitaApp {
 
                 this.peer.on("error", (err) => {
                     console.warn("PeerJS info:", err.type);
-                    // Jika gagal lewat PeerJS namun di tab lokal, BroadcastChannel tetap jalan
                 });
             } catch (e) {
                 console.warn("PeerJS init error:", e);
             }
         }
 
-        // Jika Guest, kirim sinyal JOIN lewat BroadcastChannel juga (untuk dukungan lokal instan)
         if (!asHost) {
             setTimeout(() => {
                 this.sendNetworkMessage({
@@ -647,12 +662,8 @@ class KataKitaApp {
                 });
             }
         });
-        conn.on("data", (data) => {
-            this.handleNetworkMessage(data);
-        });
-        conn.on("close", () => {
-            this.showToast("Lawannya terputus dari permainan.");
-        });
+        conn.on("data", (data) => this.handleNetworkMessage(data));
+        conn.on("close", () => this.showToast("Teman bermain terputus dari room."));
     }
 
     sendNetworkMessage(msg) {
@@ -688,7 +699,9 @@ class KataKitaApp {
                     this.sendNetworkMessage({
                         type: "ROOM_READY",
                         hostName: this.myName,
-                        guestName: this.peerName
+                        guestName: this.peerName,
+                        difficulty: this.selectedDifficulty,
+                        topic: this.selectedTopic
                     });
                     this.showToast(`${this.peerName} bergabung ke Room! 🎉`);
                     this.enterVotingScreen();
@@ -698,9 +711,19 @@ class KataKitaApp {
             case "ROOM_READY":
                 if (!this.isHost) {
                     this.peerName = data.hostName || "Host";
+                    this.selectedDifficulty = data.difficulty || "sedang";
+                    this.selectedTopic = data.topic || "acak";
                     this.showToast(`Terhubung dengan ${this.peerName}! 🎉`);
                     this.enterVotingScreen();
                 }
+                break;
+
+            case "SYNC_SETTINGS":
+                this.selectedDifficulty = data.difficulty;
+                this.selectedTopic = data.topic;
+                document.getElementById("vote-difficulty-select").value = this.selectedDifficulty;
+                document.getElementById("vote-topic-select").value = this.selectedTopic;
+                this.showToast(`Pengaturan diubah: ${DIFF_LABELS[this.selectedDifficulty]} • ${TOPIC_LABELS[this.selectedTopic]}`);
                 break;
 
             case "CAST_VOTE":
@@ -717,6 +740,8 @@ class KataKitaApp {
                 break;
 
             case "START_GAME":
+                if (data.difficulty) this.selectedDifficulty = data.difficulty;
+                if (data.topic) this.selectedTopic = data.topic;
                 if (data.tieBreakMsg) {
                     this.showToast(data.tieBreakMsg, 2600);
                 }
@@ -744,13 +769,16 @@ class KataKitaApp {
     }
 
     // ==========================================
-    // LAYAR VOTING PEMILIHAN GAME
+    // LAYAR VOTING & PENGATURAN MULTIPLAYER
     // ==========================================
     enterVotingScreen() {
         this.myVote = null;
         this.peerVote = null;
 
         document.getElementById("vote-room-code").textContent = this.roomCode;
+        document.getElementById("vote-difficulty-select").value = this.selectedDifficulty;
+        document.getElementById("vote-topic-select").value = this.selectedTopic;
+
         const p1Name = this.isHost ? this.myName : this.peerName;
         const p2Name = this.isHost ? this.peerName : this.myName;
 
@@ -788,23 +816,13 @@ class KataKitaApp {
         const p1Badge = document.getElementById("vote-p1-status");
         const p2Badge = document.getElementById("vote-p2-status");
 
-        const formatChoice = (v) => v === "wordle" ? "Memilih Wordle 🟩" : "Memilih Hangman 🪢";
+        const formatChoice = (v) => v === "wordle" ? "Vote Wordle 🟩" : "Vote Hangman 🪢";
 
-        if (p1Vote) {
-            p1Badge.textContent = formatChoice(p1Vote);
-            p1Badge.classList.add("ready");
-        } else {
-            p1Badge.textContent = "Belum memilih";
-            p1Badge.classList.remove("ready");
-        }
+        p1Badge.textContent = p1Vote ? formatChoice(p1Vote) : "Belum memilih";
+        p1Badge.classList.toggle("ready", Boolean(p1Vote));
 
-        if (p2Vote) {
-            p2Badge.textContent = formatChoice(p2Vote);
-            p2Badge.classList.add("ready");
-        } else {
-            p2Badge.textContent = "Belum memilih";
-            p2Badge.classList.remove("ready");
-        }
+        p2Badge.textContent = p2Vote ? formatChoice(p2Vote) : "Belum memilih";
+        p2Badge.classList.toggle("ready", Boolean(p2Vote));
     }
 
     resolveVotesAndStart() {
@@ -813,50 +831,59 @@ class KataKitaApp {
 
         if (this.myVote !== this.peerVote) {
             chosenGame = Math.random() < 0.5 ? "wordle" : "hangman";
-            const label = chosenGame === "wordle" ? "WORDLE" : "HANGMAN";
-            tieBreakMsg = `Pilihan berbeda! Hasil undian: ${label} 🎲`;
+            const label = chosenGame === "wordle" ? "WORDLE" : "HANGMAN KREATIF";
+            tieBreakMsg = `Vote berbeda! Undian memilih: ${label} 🎲`;
             this.showToast(tieBreakMsg, 2600);
         } else {
-            const label = chosenGame === "wordle" ? "WORDLE" : "HANGMAN";
+            const label = chosenGame === "wordle" ? "WORDLE" : "HANGMAN KREATIF";
             tieBreakMsg = `Sepakat bermain ${label}! 🚀`;
             this.showToast(tieBreakMsg, 2000);
         }
 
-        const wordObj = this.pickRandomWord();
-        const firstTurn = "host"; // Host mulai duluan, lalu bergantian
+        const wordObj = this.pickQuestion(chosenGame, this.selectedTopic, this.selectedDifficulty);
+        const firstTurn = "host";
 
         setTimeout(() => {
             this.sendNetworkMessage({
                 type: "START_GAME",
                 gameType: chosenGame,
                 wordObj,
+                difficulty: this.selectedDifficulty,
+                topic: this.selectedTopic,
                 firstTurn,
                 tieBreakMsg
             });
             this.startSelectedGame(chosenGame, wordObj, firstTurn);
-        }, 700);
+        }, 650);
     }
 
     // ==========================================
-    // INISIALISASI PERMAINAN (WORDLE / HANGMAN)
+    // MULAI PERMAINAN (WORDLE / HANGMAN KREATIF)
     // ==========================================
     startSelectedGame(gameType, wordObj, firstTurn) {
         this.gameType = gameType;
         this.secretWord = wordObj.word.toUpperCase();
         this.secretClue = wordObj.clue;
+        this.secretTopic = wordObj.topic || this.selectedTopic;
         this.activeTurn = firstTurn;
         this.isGameOver = false;
         this.isAnimating = false;
         this.hintUsed = false;
 
         document.getElementById("btn-hint").classList.remove("hint-used");
-        document.getElementById("restart-label").textContent = this.mode === "solo" ? "Kata Baru" : "Pilih Game";
-        document.getElementById("btn-back-vote").classList.toggle("hidden", this.mode === "solo");
+        document.getElementById("restart-label").textContent = this.mode === "solo" ? "Soal Baru" : "Ganti Game/Topik";
+        document.getElementById("btn-back-vote").classList.remove("hidden");
+
+        // Update badge topik & kesulitan di atas arena
+        const topicBadge = document.getElementById("game-topic-badge");
+        const diffBadge = document.getElementById("game-diff-badge");
+        topicBadge.textContent = TOPIC_LABELS[this.secretTopic] || TOPIC_LABELS[this.selectedTopic];
+        diffBadge.textContent = DIFF_LABELS[this.selectedDifficulty];
+        diffBadge.dataset.diff = this.selectedDifficulty;
 
         // Reset Keyboard
         document.querySelectorAll("#keyboard .key").forEach(k => delete k.dataset.state);
 
-        // Tampilkan area permainan yang sesuai
         const wordleArea = document.getElementById("wordle-area");
         const hangmanArea = document.getElementById("hangman-area");
         const enterKey = document.getElementById("key-enter");
@@ -894,34 +921,30 @@ class KataKitaApp {
     }
 
     updateTurnAndChancesUI() {
-        const modeBadge = document.getElementById("game-mode-badge");
         const chanceBadge = document.getElementById("chance-counter-badge");
         const turnBanner = document.getElementById("turn-banner");
         const keyboardEl = document.getElementById("keyboard");
 
         if (this.mode === "solo") {
-            modeBadge.textContent = this.gameType === "wordle" ? "Wordle Solo" : "Hangman Solo";
             if (this.gameType === "wordle") {
                 const rem = this.maxGuesses - this.currentRow;
-                chanceBadge.textContent = `Sisa Kesempatan: ${rem}/6`;
+                chanceBadge.textContent = `Percobaan: ${rem}/${this.maxGuesses}`;
             } else {
-                const rem = this.maxMistakes - this.mistakes;
-                chanceBadge.textContent = `Sisa Nyawa: ${rem}/6`;
+                const rem = Math.max(0, this.maxMistakes - this.mistakes);
+                chanceBadge.textContent = `Nyawa: ${rem}/${this.maxMistakes}`;
             }
             turnBanner.textContent = "Giliranmu Menebak!";
             turnBanner.classList.remove("waiting-turn");
             keyboardEl.classList.remove("disabled-turn");
         } else {
-            modeBadge.textContent = `Room: ${this.roomCode}`;
             if (this.gameType === "wordle") {
-                // Masing-masing pemain punya 3 kesempatan dari total 6 baris
                 const hostTurnsUsed = Math.ceil(this.currentRow / 2);
                 const guestTurnsUsed = Math.floor(this.currentRow / 2);
                 const myTurnsLeft = this.isHost ? (3 - hostTurnsUsed) : (3 - guestTurnsUsed);
                 chanceBadge.textContent = `Jatahmu: ${myTurnsLeft}/3`;
             } else {
-                const rem = this.maxMistakes - this.mistakes;
-                chanceBadge.textContent = `Nyawa Tim: ${rem}/6`;
+                const rem = Math.max(0, this.maxMistakes - this.mistakes);
+                chanceBadge.textContent = `Nyawa Tim: ${rem}/${this.maxMistakes}`;
             }
 
             if (this.isMyTurn()) {
@@ -964,10 +987,10 @@ class KataKitaApp {
     createWordleBoardDOM() {
         const boardEl = document.getElementById("board");
         boardEl.innerHTML = "";
-        for (let r = 0; r < this.maxGuesses; r++) {
+        for (let r = 0; r < 6; r++) {
             const row = document.createElement("div");
             row.className = "board-row";
-            for (let c = 0; c < this.wordLength; c++) {
+            for (let c = 0; c < 5; c++) {
                 const tile = document.createElement("div");
                 tile.className = "tile";
                 tile.dataset.state = "empty";
@@ -978,10 +1001,21 @@ class KataKitaApp {
     }
 
     initWordleRound() {
+        this.maxGuesses = 6;
         this.currentRow = 0;
         this.currentCol = 0;
         this.guesses = Array.from({ length: this.maxGuesses }, () => Array(this.wordLength).fill(""));
         this.evaluations = [];
+
+        // Pada tingkat Mudah, tampilkan clue sejak awal; pada Sedang/Sulit, beri tahu topiknya dulu
+        const clueBanner = document.getElementById("wordle-clue-text");
+        if (this.selectedDifficulty === "mudah") {
+            clueBanner.textContent = `💡 Petunjuk: ${this.secretClue}`;
+        } else if (this.selectedDifficulty === "sedang") {
+            clueBanner.textContent = `🔍 Topik ${TOPIC_LABELS[this.secretTopic]} — Petunjuk terbuka setelah 3 tebakan!`;
+        } else {
+            clueBanner.textContent = `💀 Mode Sulit (${TOPIC_LABELS[this.secretTopic]}) — Tebak tanpa petunjuk & tanpa bantuan!`;
+        }
 
         const tiles = document.querySelectorAll("#board .tile");
         tiles.forEach(tile => {
@@ -1042,7 +1076,7 @@ class KataKitaApp {
         }
 
         const guessWord = this.guesses[this.currentRow].join("");
-        if (!VALID_WORDS_SET.has(guessWord) && !this.isPlausibleIndonesianWord(guessWord)) {
+        if (!VALID_WORDLE_SET.has(guessWord) && !this.isPlausibleIndonesianWord(guessWord)) {
             this.shakeWordleRow();
             this.showToast("Kata tidak dikenali dalam kamus!");
             return;
@@ -1079,7 +1113,7 @@ class KataKitaApp {
         this.isAnimating = true;
         const rowEl = document.getElementById("board").children[rowIndex];
         const tiles = rowEl.children;
-        const flipDelay = 170;
+        const flipDelay = 165;
 
         for (let i = 0; i < this.wordLength; i++) {
             const tile = tiles[i];
@@ -1091,11 +1125,11 @@ class KataKitaApp {
                 setTimeout(() => {
                     tile.dataset.state = state;
                     this.updateKeyboardKey(letter, state);
-                }, 240);
+                }, 230);
             }, i * flipDelay);
         }
 
-        const totalTime = (this.wordLength - 1) * flipDelay + 520;
+        const totalTime = (this.wordLength - 1) * flipDelay + 500;
         setTimeout(() => {
             this.isAnimating = false;
             const actorName = isLocalActor ? this.myName : this.peerName;
@@ -1110,11 +1144,17 @@ class KataKitaApp {
                 setTimeout(() => this.showResultModal(true, msg), 1300);
             } else if (rowIndex === this.maxGuesses - 1) {
                 this.isGameOver = true;
-                this.showToast(`Kesempatan habis! Kata: ${this.secretWord}`, 3200);
+                this.showToast(`Kesempatan habis! Jawaban: ${this.secretWord}`, 3200);
                 setTimeout(() => this.showResultModal(false, "6 Kesempatan telah habis."), 1300);
             } else {
                 this.currentRow++;
                 this.currentCol = 0;
+
+                // Pada tingkat Sedang, buka petunjuk setelah 3 tebakan gagal
+                if (this.selectedDifficulty === "sedang" && this.currentRow === 3) {
+                    document.getElementById("wordle-clue-text").textContent = `💡 Petunjuk Terbuka: ${this.secretClue}`;
+                }
+
                 this.toggleTurn();
             }
         }, totalTime);
@@ -1163,13 +1203,40 @@ class KataKitaApp {
     }
 
     // ==========================================
-    // LOGIKA GAME 2: HANGMAN BAHASA INDONESIA
+    // LOGIKA GAME 2: HANGMAN KREATIF (MULTI-KATA & PANJANG DINAMIS)
     // ==========================================
     initHangmanRound() {
+        // Jumlah nyawa sesuai tingkat kesulitan!
+        if (this.selectedDifficulty === "mudah") {
+            this.maxMistakes = 6;
+        } else if (this.selectedDifficulty === "sedang") {
+            this.maxMistakes = 5;
+        } else {
+            this.maxMistakes = 4; // Sulit: Hanya 4 kesalahan!
+        }
+
         this.mistakes = 0;
         this.guessedLetters = new Set();
 
-        document.getElementById("hangman-clue-text").textContent = this.secretClue || "Kata benda/sifat Bahasa Indonesia.";
+        // Hitung struktur kata (misal: "2 Kata • 12 Huruf")
+        const wordsArr = this.secretWord.split(" ").filter(Boolean);
+        const totalLetters = wordsArr.join("").length;
+        document.getElementById("hangman-structure-tag").textContent =
+            `${wordsArr.length} Kata • ${totalLetters} Huruf`;
+
+        document.getElementById("hangman-clue-text").textContent =
+            this.secretClue || "Tebak istilah atau ungkapan Bahasa Indonesia ini!";
+
+        // Pada tingkat Mudah, berikan 1 huruf vokal pembuka gratis jika panjang >= 8 huruf
+        if (this.selectedDifficulty === "mudah" && totalLetters >= 8) {
+            const vowelsInWord = this.secretWord.split("").filter(ch => /[AIUEO]/.test(ch));
+            if (vowelsInWord.length > 0) {
+                const freeChar = vowelsInWord[0];
+                this.guessedLetters.add(freeChar);
+                this.updateKeyboardKey(freeChar, "correct");
+            }
+        }
+
         this.updateHangmanDrawing();
         this.renderHangmanSlots();
     }
@@ -1178,29 +1245,38 @@ class KataKitaApp {
         const container = document.getElementById("hangman-word-slots");
         container.innerHTML = "";
 
-        for (let i = 0; i < this.secretWord.length; i++) {
-            const ch = this.secretWord[i];
-            const slot = document.createElement("div");
-            slot.className = "hm-slot";
+        const words = this.secretWord.split(" ");
+        words.forEach(word => {
+            const group = document.createElement("div");
+            group.className = "hm-word-group";
 
-            if (this.guessedLetters.has(ch)) {
-                slot.textContent = ch;
-                slot.classList.add("revealed");
-            } else if (revealMissed) {
-                slot.textContent = ch;
-                slot.classList.add("missed-reveal");
-            } else {
-                slot.textContent = "";
+            for (let i = 0; i < word.length; i++) {
+                const ch = word[i];
+                const slot = document.createElement("div");
+                slot.className = "hm-slot";
+
+                if (this.guessedLetters.has(ch)) {
+                    slot.textContent = ch;
+                    slot.classList.add("revealed");
+                } else if (revealMissed) {
+                    slot.textContent = ch;
+                    slot.classList.add("missed-reveal");
+                } else {
+                    slot.textContent = "";
+                }
+                group.appendChild(slot);
             }
-            container.appendChild(slot);
-        }
+            container.appendChild(group);
+        });
     }
 
     updateHangmanDrawing() {
+        // Petakan proporsi kesalahan ke 6 bagian tubuh SVG
+        const partsToShow = Math.round((this.mistakes / this.maxMistakes) * 6);
         const parts = document.querySelectorAll("#hangman-svg .hm-part");
         parts.forEach(part => {
             const partNum = parseInt(part.dataset.part, 10);
-            part.classList.toggle("hidden", partNum > this.mistakes);
+            part.classList.toggle("hidden", partNum > partsToShow);
         });
 
         const remaining = Math.max(0, this.maxMistakes - this.mistakes);
@@ -1240,23 +1316,25 @@ class KataKitaApp {
             this.updateHangmanDrawing();
         }
 
-        // Cek apakah semua huruf sudah terbuka
-        const allRevealed = this.secretWord.split("").every(ch => this.guessedLetters.has(ch));
+        // Cek kemenangan (abaikan karakter spasi)
+        const allRevealed = this.secretWord
+            .split("")
+            .filter(ch => ch !== " ")
+            .every(ch => this.guessedLetters.has(ch));
 
         if (allRevealed) {
             this.isGameOver = true;
             const winMsg = this.mode === "multi"
-                ? `Kerja bagus! ${actorName} melengkapi huruf terakhir! 🎉`
-                : "Selamat! Kamu berhasil menyelamatkannya! 🎉";
+                ? `Luar biasa! ${actorName} menuntaskan jawaban! 🎉`
+                : "Selamat! Kamu berhasil memecahkan teka-teki ini! 🎉";
             this.showToast(winMsg, 2800);
             setTimeout(() => this.showResultModal(true, winMsg), 1100);
         } else if (this.mistakes >= this.maxMistakes) {
             this.isGameOver = true;
             this.renderHangmanSlots(true);
-            this.showToast(`Gagal! Kata rahasia: ${this.secretWord}`, 3200);
-            setTimeout(() => this.showResultModal(false, "Nyawa habis! Orang telah tergantung."), 1200);
+            this.showToast(`Nyawa Habis! Jawaban: ${this.secretWord}`, 3200);
+            setTimeout(() => this.showResultModal(false, "Nyawa habis! Jangan menyerah, coba lagi."), 1200);
         } else {
-            // Bergantian setiap tebakan huruf
             this.toggleTurn();
         }
     }
@@ -1266,6 +1344,10 @@ class KataKitaApp {
     // ==========================================
     useHint() {
         if (this.isGameOver) return;
+        if (this.selectedDifficulty === "sulit") {
+            this.showToast("Mode Sulit tidak mengizinkan penggunaan Hint! 💀");
+            return;
+        }
         if (this.hintUsed) {
             this.showToast("Bantuan sudah dipakai pada ronde ini!");
             return;
@@ -1276,9 +1358,11 @@ class KataKitaApp {
             const idx = Math.floor(Math.random() * this.secretWord.length);
             hintMessage = `💡 Petunjuk: Huruf ke-${idx + 1} adalah "${this.secretWord[idx]}"`;
         } else {
-            const unrevealed = this.secretWord.split("").filter(c => !this.guessedLetters.has(c));
+            const unrevealed = this.secretWord
+                .split("")
+                .filter(c => c !== " " && !this.guessedLetters.has(c));
             const pick = unrevealed[Math.floor(Math.random() * unrevealed.length)] || this.secretWord[0];
-            hintMessage = `💡 Petunjuk: Kata ini mengandung huruf "${pick}"`;
+            hintMessage = `💡 Petunjuk: Jawaban mengandung huruf "${pick}"`;
         }
 
         this.hintUsed = true;
@@ -1305,8 +1389,9 @@ class KataKitaApp {
     }
 
     showResultModal(isWin, subtext) {
-        document.getElementById("result-status").textContent = isWin ? "Menang! 🎉" : "Permainan Berakhir 💪";
-        document.getElementById("result-subtext").textContent = subtext || "";
+        document.getElementById("result-status").textContent = isWin ? "Tebakan Tepat! 🎉" : "Permainan Berakhir 💪";
+        document.getElementById("result-subtext").textContent =
+            `${subtext || ""} (${TOPIC_LABELS[this.secretTopic]} • ${DIFF_LABELS[this.selectedDifficulty]})`;
         document.getElementById("secret-word-text").textContent = this.secretWord;
         document.getElementById("secret-word-clue").textContent = this.secretClue ? `"${this.secretClue}"` : "";
 
@@ -1317,7 +1402,7 @@ class KataKitaApp {
         document.querySelectorAll(".modal-overlay").forEach(m => m.classList.add("hidden"));
     }
 
-    showToast(message, duration = 2200) {
+    showToast(message, duration = 2300) {
         const container = document.getElementById("toast-container");
         const toast = document.createElement("div");
         toast.className = "toast";

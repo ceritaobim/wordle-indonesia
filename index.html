@@ -27,7 +27,7 @@
 
         <div class="brand">
             <h1>KATAKITA<span class="brand-dot">.ID</span></h1>
-            <span class="subtitle">Wordle &amp; Hangman Indonesia</span>
+            <span class="subtitle">Wordle &amp; Hangman Kreatif</span>
         </div>
 
         <div class="header-right">
@@ -44,32 +44,68 @@
     <!-- ========================================== -->
     <!-- LAYAR 1: MENU UTAMA (HOME)                 -->
     <!-- ========================================== -->
-    <section id="screen-home" class="screen active">
+    <section id="screen-home" class="screen">
         <div class="card-panel home-card">
-            <div class="hero-badge">Bahasa Indonesia</div>
-            <h2 class="panel-title">Selamat Datang!</h2>
-            <p class="panel-desc">Mainkan tebak kata <strong>Wordle (Katla)</strong> atau <strong>Hangman</strong> sendiri maupun berdua bersama teman secara *real-time*.</p>
+            <div class="top-row-flex">
+                <div class="hero-badge">Edisi Tantangan Baru</div>
+                <span class="version-pill">Multi-Topik &amp; Frasa</span>
+            </div>
+            <h2 class="panel-title">Siap Uji Kosakatamu?</h2>
+            <p class="panel-desc">Atur tingkat kesulitan &amp; topik pembahasan favoritmu, lalu mainkan sendiri atau berdua bersama teman!</p>
 
             <div class="input-group">
                 <label for="player-name">Nama Panggilanmu</label>
                 <input type="text" id="player-name" class="text-input" placeholder="Contoh: Budi" maxlength="14" value="Pemain 1">
             </div>
 
+            <!-- PILIHAN TINGKAT KESULITAN -->
+            <div class="config-block">
+                <label class="config-label">🔥 Pilih Tingkat Kesulitan</label>
+                <div class="difficulty-selector" id="home-difficulty-group">
+                    <button type="button" class="diff-pill" data-diff="mudah">
+                        <strong>Mudah</strong>
+                        <span>Santai &amp; bantuan aktif</span>
+                    </button>
+                    <button type="button" class="diff-pill active" data-diff="sedang">
+                        <strong>Sedang</strong>
+                        <span>Kosakata menantang</span>
+                    </button>
+                    <button type="button" class="diff-pill diff-hard" data-diff="sulit">
+                        <strong>Sulit 💀</strong>
+                        <span>Kata langka &amp; tanpa hint</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- PILIHAN TOPIK PEMBAHASAN -->
+            <div class="config-block">
+                <label class="config-label">📚 Pilih Topik Pembahasan</label>
+                <div class="topic-grid" id="home-topic-group">
+                    <button type="button" class="topic-chip active" data-topic="acak">🎲 Acak (Semua)</button>
+                    <button type="button" class="topic-chip" data-topic="kuliner">🍜 Kuliner Nusantara</button>
+                    <button type="button" class="topic-chip" data-topic="alam">🌋 Alam &amp; Geografi</button>
+                    <button type="button" class="topic-chip" data-topic="hewan">🐅 Hewan &amp; Flora</button>
+                    <button type="button" class="topic-chip" data-topic="budaya">🎭 Budaya &amp; Daerah</button>
+                    <button type="button" class="topic-chip" data-topic="sains">🔬 Sains &amp; Teknologi</button>
+                    <button type="button" class="topic-chip" data-topic="sastra">📜 Sastra &amp; Kiasan</button>
+                </div>
+            </div>
+
             <div class="home-section">
-                <div class="section-label">🎮 Bermain Sendiri (Solo)</div>
+                <div class="section-label">🎮 Mulai Bermain Sendiri (Solo)</div>
                 <div class="solo-grid">
                     <button id="btn-solo-wordle" class="mode-card">
                         <div class="mode-icon">🟩</div>
                         <div class="mode-info">
                             <strong>Wordle Solo</strong>
-                            <span>Tebak kata 5 huruf (6x coba)</span>
+                            <span>Tebak kata 5 huruf sesuai topik</span>
                         </div>
                     </button>
                     <button id="btn-solo-hangman" class="mode-card">
                         <div class="mode-icon">🪢</div>
                         <div class="mode-info">
-                            <strong>Hangman Solo</strong>
-                            <span>Tebak huruf sebelum digantung</span>
+                            <strong>Hangman Kreatif</strong>
+                            <span>Kata panjang, majemuk &amp; ungkapan</span>
                         </div>
                     </button>
                 </div>
@@ -80,7 +116,7 @@
             <div class="home-section">
                 <button id="btn-create-room" class="btn-primary btn-large">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    Buat Room Baru
+                    Buat Room Multiplayer
                 </button>
 
                 <div class="join-row">
@@ -121,20 +157,47 @@
                 </div>
             </div>
 
-            <p class="helper-note">💡 Kamu juga bisa membuka tab browser baru di perangkat ini dan memasukkan kode di atas untuk mencoba langsung!</p>
+            <p class="helper-note">💡 Kamu juga bisa membuka tab browser baru dan memasukkan kode di atas untuk mencoba langsung!</p>
 
             <button id="btn-cancel-lobby" class="btn-ghost">Batalkan &amp; Kembali</button>
         </div>
     </section>
 
     <!-- ========================================== -->
-    <!-- LAYAR 3: PILIH GAME DENGAN VOTING          -->
+    <!-- LAYAR 3: PILIH GAME, TOPIK & KESULITAN     -->
     <!-- ========================================== -->
     <section id="screen-vote" class="screen hidden">
         <div class="card-panel vote-card">
-            <div class="room-mini-tag">Room: <strong id="vote-room-code">-----</strong></div>
-            <h2 class="panel-title">Pilih Game (Voting)</h2>
-            <p class="panel-desc">Pilih permainan yang ingin kalian mainkan. Jika pilihan berbeda, sistem akan mengundi secara adil!</p>
+            <div class="top-row-flex">
+                <div class="room-mini-tag">Room: <strong id="vote-room-code">-----</strong></div>
+                <span class="badge-pill">Voting Arena</span>
+            </div>
+            <h2 class="panel-title">Atur Tantangan &amp; Vote Game</h2>
+            <p class="panel-desc">Tentukan tingkat kesulitan, topik pembahasan, lalu pilih game yang ingin dimainkan!</p>
+
+            <!-- Pengaturan Kesulitan & Topik di Room -->
+            <div class="multi-settings-box">
+                <div class="setting-row">
+                    <label>🔥 Kesulitan:</label>
+                    <select id="vote-difficulty-select" class="select-input">
+                        <option value="mudah">Mudah (Santai)</option>
+                        <option value="sedang" selected>Sedang (Menantang)</option>
+                        <option value="sulit">Sulit 💀 (Ekstrem &amp; Tanpa Hint)</option>
+                    </select>
+                </div>
+                <div class="setting-row">
+                    <label>📚 Topik:</label>
+                    <select id="vote-topic-select" class="select-input">
+                        <option value="acak" selected>🎲 Acak (Semua Topik)</option>
+                        <option value="kuliner">🍜 Kuliner Nusantara</option>
+                        <option value="alam">🌋 Alam &amp; Geografi</option>
+                        <option value="hewan">🐅 Hewan &amp; Flora</option>
+                        <option value="budaya">🎭 Budaya &amp; Daerah</option>
+                        <option value="sains">🔬 Sains &amp; Teknologi</option>
+                        <option value="sastra">📜 Sastra &amp; Kiasan</option>
+                    </select>
+                </div>
+            </div>
 
             <div class="players-status-bar">
                 <div class="player-vote-chip" id="vote-chip-p1">
@@ -152,15 +215,15 @@
                 <button class="vote-option-card" id="btn-vote-wordle" data-game="wordle">
                     <div class="vote-icon">🟩🟨</div>
                     <h3>WORDLE (KATLA)</h3>
-                    <p>Tebak kata 5 huruf dalam 6 kesempatan. <strong>Giliran bergantian</strong> (masing-masing 3 kesempatan)!</p>
-                    <span class="vote-action-label">Pilih Wordle</span>
+                    <p>Kata 5 huruf sesuai topik &amp; kesulitan. <strong>Giliran bergantian</strong>!</p>
+                    <span class="vote-action-label">Vote Wordle</span>
                 </button>
 
                 <button class="vote-option-card" id="btn-vote-hangman" data-game="hangman">
-                    <div class="vote-icon">🪢🔤</div>
-                    <h3>HANGMAN</h3>
-                    <p>Tebak huruf demi huruf secara <strong>bergantian</strong> sebelum gambar orang selesai digantung (6 nyawa)!</p>
-                    <span class="vote-action-label">Pilih Hangman</span>
+                    <div class="vote-icon">🪢✨</div>
+                    <h3>HANGMAN KREATIF</h3>
+                    <p>Kata panjang (6–12 huruf), istilah unik &amp; <strong>frasa multi-kata</strong> secara bergantian!</p>
+                    <span class="vote-action-label">Vote Hangman</span>
                 </button>
             </div>
         </div>
@@ -170,10 +233,11 @@
     <!-- LAYAR 4: ARENA PERMAINAN (WORDLE & HANGMAN)-->
     <!-- ========================================== -->
     <main id="screen-game" class="game-container hidden">
-        <!-- Bar Informasi Giliran & Mode -->
+        <!-- Bar Informasi Topik, Kesulitan & Giliran -->
         <div class="turn-header">
             <div class="game-meta">
-                <span id="game-mode-badge" class="badge">Solo</span>
+                <span id="game-topic-badge" class="badge topic-badge">🎲 Acak</span>
+                <span id="game-diff-badge" class="badge diff-badge">Sedang</span>
                 <span id="chance-counter-badge" class="badge chance-badge">Kesempatan: 6</span>
             </div>
             <div id="turn-banner" class="turn-banner">
@@ -187,10 +251,13 @@
 
         <!-- AREA WORDLE -->
         <div id="wordle-area" class="board-wrapper">
+            <div id="wordle-clue-banner" class="wordle-clue-banner">
+                <span id="wordle-clue-text">Tebak kata 5 huruf sesuai topik!</span>
+            </div>
             <div id="board" class="board" aria-label="Papan Wordle"></div>
         </div>
 
-        <!-- AREA HANGMAN -->
+        <!-- AREA HANGMAN KREATIF -->
         <div id="hangman-area" class="hangman-wrapper hidden">
             <div class="hangman-top">
                 <div class="hangman-Order-drawing">
@@ -200,7 +267,7 @@
                         <line x1="55" y1="175" x2="55" y2="20" class="gallows" />
                         <line x1="55" y1="20" x2="130" y2="20" class="gallows" />
                         <line x1="130" y1="20" x2="130" y2="42" class="gallows" />
-                        <!-- Bagian Tubuh (6 kesalahan) -->
+                        <!-- Bagian Tubuh -->
                         <circle cx="130" cy="58" r="16" class="hm-part hidden" data-part="1" />
                         <line x1="130" y1="74" x2="130" y2="122" class="hm-part hidden" data-part="2" />
                         <line x1="130" y1="86" x2="105" y2="108" class="hm-part hidden" data-part="3" />
@@ -211,11 +278,13 @@
                 </div>
                 <div class="hangman-status-panel">
                     <div class="lives-box">
-                        <span>Nyawa Tersisa:</span>
+                        <div class="hm-meta-tags">
+                            <span id="hangman-structure-tag" class="structure-tag">1 Kata • 8 Huruf</span>
+                        </div>
                         <strong id="hangman-lives">❤️❤️❤️❤️❤️❤️ (6/6)</strong>
                     </div>
                     <div class="clue-card">
-                        <span class="clue-tag">Petunjuk Arti Kata:</span>
+                        <span class="clue-tag">🔍 Petunjuk Teka-Teki:</span>
                         <p id="hangman-clue-text">Memuat petunjuk...</p>
                     </div>
                 </div>
@@ -224,7 +293,7 @@
             <div id="hangman-word-slots" class="hangman-word-slots"></div>
         </div>
 
-        <!-- PAPAN KETIK VIRTUAL (Dipakai bersama untuk Wordle & Hangman) -->
+        <!-- PAPAN KETIK VIRTUAL -->
         <div id="keyboard" class="keyboard" aria-label="Papan Ketik Virtual">
             <div class="keyboard-row">
                 <button class="key" data-key="Q">Q</button>
@@ -271,24 +340,20 @@
     <div id="modal-help" class="modal-overlay hidden" role="dialog" aria-modal="true">
         <div class="modal-card">
             <div class="modal-header">
-                <h2>Panduan Bermain</h2>
+                <h2>Panduan &amp; Tingkat Kesulitan</h2>
                 <button class="close-modal" data-close="modal-help">&times;</button>
             </div>
             <div class="modal-body">
-                <p><strong>1. Mode Multiplayer &amp; Voting:</strong></p>
-                <p>Buat Room untuk mendapatkan <strong>Kode Room</strong>, lalu minta temanmu memasukkan kode tersebut dan menekan <strong>Enter</strong>. Setelah terhubung, kalian akan melakukan <strong>Voting</strong> memilih antara <em>Wordle</em> atau <em>Hangman</em>.</p>
+                <p><strong>1. Tingkat Kesulitan:</strong></p>
+                <p>• <strong>Mudah:</strong> Kosakata populer, 6 nyawa/kesempatan, tombol Hint aktif.<br>
+                   • <strong>Sedang:</strong> Kosakata spesifik topik &amp; istilah majemuk, 6 kesempatan (Wordle) / 5 nyawa (Hangman).<br>
+                   • <strong>Sulit 💀:</strong> Kosakata langka/sastra/ilmiah, frasa panjang, hanya <strong>4 nyawa di Hangman</strong>, dan <strong>Tanpa Tombol Hint</strong>!</p>
 
-                <p><strong>2. Aturan Wordle (Katla):</strong></p>
-                <p>Tebak kata 5 huruf dalam total <strong>6 kesempatan</strong>. Di mode Multiplayer, kedua pemain bergantian memasukkan tebakan (masing-masing mendapat <strong>3 kesempatan</strong>).</p>
-                <div class="example-tiles">
-                    <div class="mini-tile correct">M</div>
-                    <div class="mini-tile present">A</div>
-                    <div class="mini-tile absent">K</div>
-                </div>
-                <p class="example-desc">🟩 <strong>Hijau:</strong> Posisi tepat | 🟨 <strong>Kuning:</strong> Posisi salah | ⬛ <strong>Abu:</strong> Tidak ada</p>
+                <p><strong>2. Hangman Kreatif (6–15 Huruf &amp; Multi-Kata):</strong></p>
+                <p>Hangman kini tidak dibatasi 5 huruf! Kamu akan menghadapi kata panjang (seperti <code>KHATULISTIWA</code>), kuliner &amp; budaya (<code>RENDANG SAPI</code>, <code>WAYANG KULIT</code>), hingga kiasan Nusantara (<code>BANTING TULANG</code>). Spasi antar kata otomatis dipisahkan.</p>
 
-                <p style="margin-top:12px;"><strong>3. Aturan Hangman:</strong></p>
-                <p>Klik huruf satu per satu secara <strong>bergantian</strong> untuk mengungkap kata rahasia berdasarkan petunjuk KBBI sebelum 6 nyawa habis!</p>
+                <p><strong>3. Giliran Multiplayer:</strong></p>
+                <p>Buat Room atau masukkan Kode Room lalu tekan <strong>Enter</strong>. Kedua pemain dapat memilih topik, tingkat kesulitan, dan melakukan <strong>Voting Game</strong>. Setiap tebakan dilakukan secara bergantian!</p>
             </div>
         </div>
     </div>
@@ -305,14 +370,14 @@
                     <div id="result-status" class="result-status">Luar Biasa!</div>
                     <div id="result-subtext" class="result-subtext"></div>
                     <div class="secret-reveal">
-                        Kata Rahasia: <strong id="secret-word-text">MAKAN</strong>
+                        Jawaban: <strong id="secret-word-text">KHATULISTIWA</strong>
                     </div>
                     <p id="secret-word-clue" class="secret-clue"></p>
                 </div>
 
                 <div class="modal-actions">
                     <button id="btn-back-vote" class="btn-secondary hidden">
-                        🗳️ Pilih Game (Vote)
+                        ⚙️ Ganti Game / Topik
                     </button>
                     <button id="btn-play-again" class="btn-primary">
                         Main Lagi &rarr;
